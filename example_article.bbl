@@ -1,0 +1,27 @@
+\begin{thebibliography}{xx}
+
+\harvarditem{Gelman \harvardand\ Loken}{2014}{Gelman2014}
+Gelman, Andrew \harvardand\ Eric Loken. 2014.
+\newblock ``The Statistical Crisis in Science.'' {\em American Scientist}
+  102(6):460.
+
+\harvarditem[Herndon, Ash \harvardand\ Pollin]{Herndon, Ash \harvardand\
+  Pollin}{2014}{Herndon2014}
+Herndon, Thomas, Michael Ash \harvardand\ Robert Pollin. 2014.
+\newblock ``Does High Public Debt Consistently Stifle Economic Growth? A
+  Critique of Reinhart and Rogoff.'' {\em Cambridge Journal of Economics}
+  38(2):257--279.
+
+\harvarditem{Solt \harvardand\ Hu}{2015}{Solt2015c}
+Solt, Frederick \harvardand\ Yue Hu. 2015.
+\newblock ``{dotwhisker}: Dot-and-Whisker Plots of Regression Results.''
+  Available at the Comprehensive R Archive Network (CRAN).
+\newline\harvardurl{http://CRAN.R-project.org/package=dotwhisker}
+
+\harvarditem[Solt et~al.]{Solt, Hu, Hudson, Song \harvardand\
+  Yu}{2017}{Solt2017}
+Solt, Frederick, Yue Hu, Kevan Hudson, Jungmin Song \harvardand\ Dong Yu. 2017.
+\newblock ``Economic Inequality and Class Consciousness.'' {\em Journal of
+  Politics} 79(3):1079--1083.
+
+\end{thebibliography}
