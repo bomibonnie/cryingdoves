@@ -2,10 +2,10 @@ This is BibTeX, Version 0.99d (TeX Live 2018/W32TeX)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: example_article.aux
 The style file: apsr.bst
-Database file #1: C:/Users/bomim/Documents/cryingdoves/example_article.bib
+Database file #1: C:/Users/bomim/Documents/cryingdoves/paper/example_article.bib
 You've used 4 entries,
             2874 wiz_defined-function locations,
-            670 strings with 5468 characters,
+            670 strings with 5474 characters,
 and the built_in function-call counts, 18177 in all, are:
 = -- 2930
 > -- 295

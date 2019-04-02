@@ -5,7 +5,7 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: C:/Users/bomim/Documents/paper_practice/svm-latex-ms2.tex
+    template: C:/Users/bomim/Documents/cryingdoves/paper/svm-latex-ms2.tex
 title: "An Example Article"
 thanks: "The paper's revision history and the materials needed to reproduce its analyses can be found [on Github here](http://github.com/fsolt/example_article). Corresponding author: [frederick-solt@uiowa.edu](mailto:frederick-solt@uiowa.edu). Current version: `r format(Sys.time(), '%B %d, %Y')`."
 author:
