@@ -11,7 +11,7 @@ library(tabulizerjars)
 
 # Dependent Variable
 
-location <- "C:/Users/bomim/Documents/cryingdoves/data-raw/GallupKoreaDailyOpinion_174(20150807).pdf"
+location <- "data-raw/GallupKoreaDailyOpinion_174(20150807).pdf"
 tab <- extract_tables(location, pages=3)
 
 x <- cbind(tab[[1]][c(6, 8, 10, 12, 14),3:17]) %>%
@@ -41,7 +41,7 @@ app_df <- x %>%
   arrange(year, quarter)
 
 app_df <- app_df[,c("year", "quarter", "president", "approval")]  
-write.csv(app_df, "data//korapp.csv", row.names = FALSE)
+write.csv(app_df, "data//korapp.csv", row.names = FALSE, na = "")
 
 
 # Independent Variables
@@ -147,7 +147,7 @@ gold_all_m <- rbind(gold1993m, gold1994m, gold1995m, gold1996m,
                     gold2009m, gold2010m, gold2011m, gold2012m,
                     gold2013m, gold2014m)
 
-write.csv(gold_all_m, "data//gold_all_m.csv", row.names = FALSE)
+write.csv(gold_all_m, "data//gold_all_m.csv", row.names = FALSE, na = "")
 
 ## Collapse data (quarterly)
 
@@ -157,4 +157,4 @@ gold_all_q <-  gold_all_m %>%
                 kp_q = mean(ko_pr_gol, na.rm=TRUE),
                 kc_q = mean(ko_ch_gol, na.rm=TRUE))
 
-write.csv(gold_all_q, "data//gold_all_q.csv", row.names = FALSE)
+write.csv(gold_all_q, "data//gold_all_q.csv", row.names = FALSE, na = "")
