@@ -41,7 +41,7 @@ app_df <- x %>%
   arrange(year, quarter)
 
 app_df <- app_df[,c("year", "quarter", "president", "approval")]  
-write.csv(app_df, "C://Users//bomim//Documents//cryingdoves/data//korapp.csv", row.names = FALSE)
+write.csv(app_df, "data//korapp.csv", row.names = FALSE)
 
 
 # Independent Variables
@@ -52,6 +52,7 @@ library(haven)
 
 terr1994 <- stream_in(gzfile("C:/Users/bomim/Documents/cryingdoves/data-raw/terrier-no-location-source-complete-1994.json.gz"))
 varnames<-colnames(terr1994)
+rm(terr1994)
 
 terr1993 <- import("C:/Users/bomim/Documents/cryingdoves/data-raw/terrier-no-location-source-complete-1993.json.gz.tsv")
 colnames(terr1993) <- varnames
@@ -59,7 +60,7 @@ colnames(terr1993) <- varnames
 gold1993m <- terr1993 %>%
    group_by(tgt_actor, month) %>%
     filter(src_actor=="KOR", tgt_actor=="JPN"|tgt_actor=="PRK"|tgt_actor=="CHN") %>%
-    summarize(avr_gold=mean(goldstein),
+    summarize(avr_gold=mean(goldstein, na.rm=TRUE),
               year=mean(year)) %>%
     spread(tgt_actor, avr_gold) %>%
     transmute(year = ifelse(month>=3, as.numeric(year), as.numeric(year)-1),
@@ -78,7 +79,7 @@ gol_format <- function(df){
   x<- x %>% 
   group_by(tgt_actor, month) %>%
     filter(src_actor=="KOR", tgt_actor=="JPN"|tgt_actor=="PRK"|tgt_actor=="CHN") %>%
-    summarize(avr_gold=mean(goldstein),
+    summarize(avr_gold=mean(goldstein, na.rm=TRUE),
               year=mean(year)) %>%
     spread(tgt_actor, avr_gold) %>%
     transmute(year = ifelse(month>=3, as.numeric(year), as.numeric(year)-1),
@@ -100,28 +101,21 @@ for(t in 1994:2001){
   namet <- paste0("data-raw/terrier-no-location-source-complete-", t, ".json.gz.tsv")
   terrt<- import(namet)
   goldtm <- gol_format(terrt)
-  gold_total[[t-1993]] <- goldtm
+  gold_total_b[[t-1993]] <- goldtm
 }
 
 
-pathPrep <- function(path = "clipboard") {
-  y <- if (path == "clipboard") {
-    readClipboard()
-  } else {
-    cat("Please enter the path:\n\n")
-    readline()
-  }
-  x <- chartr("\\", "/", y)
-  writeClipboard(x)
-  return(x)
-}
+# Download data @ flash drive
+
 
 for(t in 2002:2014){
-  namet <- paste0("terrier-no-location-source-complete-", t, ".json.gz.tsv")
+  namet <- paste0("D:/terrier-no-location-source-complete-", t, ".json.gz.tsv")
   terrt<- import(namet)
   goldtm <- gol_format(terrt)
   gold_total[[t-1993]] <- goldtm
 }
+
+rm(terrt)
 
 gold1994m <- gold_total[[1]]
 gold1995m <- gold_total[[2]]
@@ -146,13 +140,21 @@ gold2013m <- gold_total[[20]]
 gold2014m <- gold_total[[21]]
 
 
+gold_all_m <- rbind(gold1993m, gold1994m, gold1995m, gold1996m,
+                    gold1997m, gold1998m, gold1999m, gold2000m,
+                    gold2001m, gold2002m, gold2003m, gold2004m,
+                    gold2005m, gold2006m, gold2007m, gold2008m,
+                    gold2009m, gold2010m, gold2011m, gold2012m,
+                    gold2013m, gold2014m)
 
+write.csv(gold_all_m, "data//gold_all_m.csv", row.names = FALSE)
 
 ## Collapse data (quarterly)
 
-gold1993q <-  gold1993m %>%
+gold_all_q <-  gold_all_m %>%
     group_by(year, quarter) %>%
-      summarize(kj_q = mean(ko_jp_gol),
-                kp_q = mean(ko_pr_gol),
-                kc_q = mean(ko_ch_gol))
+      summarize(kj_q = mean(ko_jp_gol, na.rm=TRUE),
+                kp_q = mean(ko_pr_gol, na.rm=TRUE),
+                kc_q = mean(ko_ch_gol, na.rm=TRUE))
 
+write.csv(gold_all_q, "data//gold_all_q.csv", row.names = FALSE)
