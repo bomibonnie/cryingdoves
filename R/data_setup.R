@@ -37,7 +37,7 @@ app_df <- x %>%
                              ifelse(president=="M Roh", 2002,
                                   ifelse(president=="M Lee", 2007, 2012)))),
        year = year1 + as.numeric(str_sub(quarter, 1, 1)),
-      quarter = str_sub(quarter, -1, -1)) %>%
+      quarter = as.numeric(str_sub(quarter, -1, -1))) %>%
   arrange(year, quarter)
 
 app_df <- app_df[,c("year", "quarter", "president", "approval")]  
@@ -204,3 +204,17 @@ cpi_q <- cpi_kor %>%
   summarize(cpi_k_q = mean(cpi_k, na.rm=TRUE))
 
 write.csv(cpi_q, "data//cpi_k_q.csv", row.names = FALSE, na = "")
+
+# Merge data
+doves_dat <- app_df %>%
+  left_join(gold_all_q, by = c("year", "quarter")) %>%
+  left_join(unemp_q, by = c("year", "quarter")) %>%
+  left_join(cpi_q, by = c("year", "quarter")) %>%
+  filter(year<2015) %>%
+  mutate(newgov = ifelse((year==1993)&(quarter==1), 1, 
+                         ifelse((year==1998)&(quarter==1), 1, 
+                                ifelse((year==2003)&(quarter==1), 1,
+                                       ifelse((year==2008)&(quarter==1), 1,
+                                              ifelse((year==2013)&(quarter==1), 1,0))))))
+
+write.csv(doves_dat, "data//doves_kor.csv", row.names = FALSE, na = "")
