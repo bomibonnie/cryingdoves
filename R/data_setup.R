@@ -43,3 +43,39 @@ write.csv(app_df, "C://Users//bomim//Documents//cryingdoves/data//korapp.csv", r
 
 
 terr_link <- "https://osf.io/4m2u7/files/"
+
+library(rio)
+library(jsonlite)
+library(haven)
+
+terr1994 <- stream_in(gzfile("C:/Users/bomim/Documents/cryingdoves/data-raw/terrier-no-location-source-complete-1994.json.gz"))
+head(terr1994)
+varnames<-colnames(terr1994)
+
+terr1993 <- import("C:/Users/bomim/Documents/cryingdoves/data-raw/terrier-no-location-source-complete-1993.json.gz.tsv")
+
+colnames(terr1993) <- varnames
+head(terr1993)
+
+
+gold1993m <- terr1993 %>%
+   group_by(tgt_actor, month) %>%
+    filter(src_actor=="KOR", tgt_actor=="JPN"|tgt_actor=="PRK"|tgt_actor=="CHN") %>%
+    summarize(avr_gold=mean(goldstein)) %>%
+    spread(tgt_actor, avr_gold) %>%
+    transmute(year = ifelse(month>=3, 1993, 1992),
+              month = as.numeric(month),
+              quarter = ifelse((month>=3)&(month<6), 1, 
+                               ifelse((month>=6)&(month<9), 2, 
+                                      ifelse((month>=9)&(month<12), 3, 4))),
+              ko_jp_gol = JPN,
+              ko_pr_gol = PRK,
+              ko_ch_gol = CHN) 
+
+
+gold1993q <-  gold1993m %>%
+    group_by(year, quarter) %>%
+      summarize(kj_q = mean(ko_jp_gol),
+                kp_q = mean(ko_pr_gol),
+                kc_q = mean(ko_ch_gol))
+
