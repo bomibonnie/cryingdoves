@@ -158,3 +158,27 @@ gold_all_q <-  gold_all_m %>%
                 kc_q = mean(ko_ch_gol, na.rm=TRUE))
 
 write.csv(gold_all_q, "data//gold_all_q.csv", row.names = FALSE, na = "")
+
+
+# Control Variables
+
+## Unemployment rate (https://data.oecd.org/unemp/unemployment-rate.htm)
+
+unemp <- read.csv("data-raw//DP_LIVE_07042019232133993.csv")
+head(unemp)
+unemp_kor <- unemp %>%
+  filter(ï..LOCATION=="KOR") %>%
+  separate(TIME, c("year", "month"), sep = "-") %>%
+  transmute(month = as.numeric(month),
+            year = ifelse(month>=3, as.numeric(year), as.numeric(year)-1),
+            quarter = ifelse((month>=3)&(month<6), 1, 
+                 ifelse((month>=6)&(month<9), 2, 
+                        ifelse((month>=9)&(month<12), 3, 4))),
+            unemp_k = Value)
+
+
+unemp_q <- unemp_kor %>%
+  group_by(year, quarter) %>%
+  summarize(unemp_k_q = mean(unemp_k, na.rm=TRUE))
+
+write.csv(unemp_q, "data//unemp_k_q.csv", row.names = FALSE, na = "")
