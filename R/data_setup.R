@@ -182,3 +182,25 @@ unemp_q <- unemp_kor %>%
   summarize(unemp_k_q = mean(unemp_k, na.rm=TRUE))
 
 write.csv(unemp_q, "data//unemp_k_q.csv", row.names = FALSE, na = "")
+
+## CPI (https://data.oecd.org/price/inflation-cpi.htm)
+
+cpi <- read.csv("data-raw//DP_LIVE_07042019232324254.csv")
+head(cpi)
+
+cpi_kor <- cpi %>%
+  filter(ï..LOCATION=="KOR") %>%
+  separate(TIME, c("year", "month"), sep = "-") %>%
+  transmute(month = as.numeric(month),
+            year = ifelse(month>=3, as.numeric(year), as.numeric(year)-1),
+            quarter = ifelse((month>=3)&(month<6), 1, 
+                             ifelse((month>=6)&(month<9), 2, 
+                                    ifelse((month>=9)&(month<12), 3, 4))),
+            cpi_k = Value)
+
+
+cpi_q <- cpi_kor %>%
+  group_by(year, quarter) %>%
+  summarize(cpi_k_q = mean(cpi_k, na.rm=TRUE))
+
+write.csv(cpi_q, "data//cpi_k_q.csv", row.names = FALSE, na = "")
