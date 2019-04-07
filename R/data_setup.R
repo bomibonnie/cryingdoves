@@ -9,6 +9,8 @@ library(rJava)
 library(tabulizer)
 library(tabulizerjars)
 
+# Dependent Variable
+
 location <- "C:/Users/bomim/Documents/cryingdoves/data-raw/GallupKoreaDailyOpinion_174(20150807).pdf"
 tab <- extract_tables(location, pages=3)
 
@@ -42,7 +44,7 @@ app_df <- app_df[,c("year", "quarter", "president", "approval")]
 write.csv(app_df, "C://Users//bomim//Documents//cryingdoves/data//korapp.csv", row.names = FALSE)
 
 
-terr_link <- "https://osf.io/4m2u7/files/"
+# Independent Variables
 
 library(rio)
 library(jsonlite)
@@ -69,8 +71,6 @@ gold1993m <- terr1993 %>%
               ko_pr_gol = PRK,
               ko_ch_gol = CHN) 
 
-rm(terr1993)
-
 ### Make a function 
 gol_format <- function(df){
   x <- df
@@ -92,10 +92,30 @@ gol_format <- function(df){
 }
 
 test1993<-gol_format(terr1993)
+rm(terr1993)
 
+terr1994 <- import("data-raw/terrier-no-location-source-complete-1994.json.gz.tsv")
+gold1994m <- gol_format(terr1994)
+rm(terr1994)
 
+terr1995 <- import("data-raw/terrier-no-location-source-complete-1995.json.gz.tsv")
+gold1995m <- gol_format(terr1995)
+rm(terr1995)
 
+terr1996 <- import("data-raw/terrier-no-location-source-complete-1996.json.gz.tsv")
+gold1996m <- gol_format(terr1996)
+rm(terr1996)
 
+gold_total <- list()
+
+for(t in 1998:2000){
+  namet <- paste0("data-raw/terrier-no-location-source-complete-", 1998, ".json.gz.tsv")
+  terrt<- import(namet)
+  goldtm <- gol_format(terrt)
+  gold_total[[t-1997]] <- goldtm
+}
+
+gold1998m <- gold_total[[1]]
 
 
 ## Collapse data (quarterly)
