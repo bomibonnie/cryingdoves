@@ -94,28 +94,58 @@ gol_format <- function(df){
 test1993<-gol_format(terr1993)
 rm(terr1993)
 
-terr1994 <- import("data-raw/terrier-no-location-source-complete-1994.json.gz.tsv")
-gold1994m <- gol_format(terr1994)
-rm(terr1994)
-
-terr1995 <- import("data-raw/terrier-no-location-source-complete-1995.json.gz.tsv")
-gold1995m <- gol_format(terr1995)
-rm(terr1995)
-
-terr1996 <- import("data-raw/terrier-no-location-source-complete-1996.json.gz.tsv")
-gold1996m <- gol_format(terr1996)
-rm(terr1996)
-
 gold_total <- list()
 
-for(t in 1998:2000){
-  namet <- paste0("data-raw/terrier-no-location-source-complete-", 1998, ".json.gz.tsv")
+for(t in 1994:2001){
+  namet <- paste0("data-raw/terrier-no-location-source-complete-", t, ".json.gz.tsv")
   terrt<- import(namet)
   goldtm <- gol_format(terrt)
-  gold_total[[t-1997]] <- goldtm
+  gold_total[[t-1993]] <- goldtm
 }
 
-gold1998m <- gold_total[[1]]
+
+pathPrep <- function(path = "clipboard") {
+  y <- if (path == "clipboard") {
+    readClipboard()
+  } else {
+    cat("Please enter the path:\n\n")
+    readline()
+  }
+  x <- chartr("\\", "/", y)
+  writeClipboard(x)
+  return(x)
+}
+
+for(t in 2002:2014){
+  namet <- paste0("terrier-no-location-source-complete-", t, ".json.gz.tsv")
+  terrt<- import(namet)
+  goldtm <- gol_format(terrt)
+  gold_total[[t-1993]] <- goldtm
+}
+
+gold1994m <- gold_total[[1]]
+gold1995m <- gold_total[[2]]
+gold1996m <- gold_total[[3]]
+gold1997m <- gold_total[[4]]
+gold1998m <- gold_total[[5]]
+gold1999m <- gold_total[[6]]
+gold2000m <- gold_total[[7]]
+gold2001m <- gold_total[[8]]
+gold2002m <- gold_total[[9]]
+gold2003m <- gold_total[[10]]
+gold2004m <- gold_total[[11]]
+gold2005m <- gold_total[[12]]
+gold2006m <- gold_total[[13]]
+gold2007m <- gold_total[[14]]
+gold2008m <- gold_total[[15]]
+gold2009m <- gold_total[[16]]
+gold2010m <- gold_total[[17]]
+gold2011m <- gold_total[[18]]
+gold2012m <- gold_total[[19]]
+gold2013m <- gold_total[[20]]
+gold2014m <- gold_total[[21]]
+
+
 
 
 ## Collapse data (quarterly)
