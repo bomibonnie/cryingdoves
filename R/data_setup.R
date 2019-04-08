@@ -9,7 +9,7 @@ library(rJava)
 library(tabulizer)
 library(tabulizerjars)
 
-# Dependent Variable
+# Dependent Variable 1 (Gallup: Quarterly)
 
 location <- "data-raw/GallupKoreaDailyOpinion_174(20150807).pdf"
 tab <- extract_tables(location, pages=3)
@@ -42,6 +42,17 @@ app_df <- x %>%
 
 app_df <- app_df[,c("year", "quarter", "president", "approval")]  
 write.csv(app_df, "data//korapp.csv", row.names = FALSE, na = "")
+
+# Dependent Variable 2 (Research&Research: Monthly)
+library(xlsx)
+?read.xlsx
+app_m <-read.xlsx("data-raw//KoreanApprovalR&R.xlsx", sheetName = "Sheet1")
+app_m <- cbind(app_m[,1:3]) %>%
+  rename(year=Year,
+         month=Month,
+         app_r=Approval_R) %>%
+  filter(year<2015) 
+  
 
 
 # Independent Variables
