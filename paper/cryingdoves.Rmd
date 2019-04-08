@@ -6,19 +6,17 @@ output:
     fig_caption: true
     latex_engine: pdflatex
     template: C:/Users/bomim/Documents/cryingdoves/paper/svm-latex-ms2.tex
-title: "Does Cooperation with Neighboring Countries Matter?
-The Dynamics of External Relations and Approval Ratings in Japan and South Korea"
-
+title: "Does Cooperation with Neighboring Countries Matter?"
 thanks: "The paper's revision history and the materials needed to reproduce its analyses can be found [on Github here](http://github.com/bomibonnie/cryingdoves). Corresponding author: [bomi-lee-1@uiowa.edu](mailto:bomi-lee-1@uiowa.edu). Current version: `r format(Sys.time(), '%B %d, %Y')`."
 author:
 - name: Bomi Lee
   affiliation: University of Iowa
-abstract: "In general, international issues are less salient than domestic issues to the public, but the diversionary theory and the rally-’round-the-flag effect explain that some types of conflictual external events can be salient enough to capture the public’s attention, which leads to the public’s support for the leaders. Although the conflictual external events are the part of a relationship, those are not equal to the relationship. In this context, I examine the effect of net cooperation on approval ratings considering all types of events from the most conflictual events to the most cooperative events. The event data are drawn from the Temporally Extended, Regular, Reproducible International Event Records (TERRIER) Project and each event is weighted by the Goldstein score. As for the approval ratings, I focus on the Japanese cabinet approval ratings from February 1986 to July 2017, and the South Korean presidential approval ratings from March 1993 to December 2014. Since there could be an endogeneity problem, I conduct the Granger Causality test and IRFs using a VAR model, and set a single equation based on the result. Considering the dynamics within the variables, I use an autoregressive distributed lag (ADL) model including the lagged values of the variables. The result shows that the net cooperation of Japan-China negatively affect the Japanese approval ratings, and that of South Korea-Japan also negatively influence the South Korean approval ratings."
-keywords: ", always seem silly, to me, given google, but regardless"
+abstract: "In general, international issues are less salient than domestic issues to the public, but the diversionary theory and the rally-’round-the-flag effect explain that some types of conflictual external events can be salient enough to capture the public’s attention, which leads to the public’s support for the leaders. Although the conflictual external events are the part of a relationship, those are not equal to the relationship. In this context, I examine the effect of net cooperation on approval ratings considering all types of events from the most conflictual events to the most cooperative events. The event data are drawn from the Temporally Extended, Regular, Reproducible International Event Records (TERRIER) Project and each event is weighted by the Goldstein score. As for the approval ratings, I focus on the Japanese cabinet approval ratings from February 1986 to July 2017, and the South Korean presidential approval ratings from March 1993 to September 2016. Since there could be an endogeneity problem, I conduct the Granger Causality test and IRFs using a VAR model, and set a single equation based on the result. Considering the dynamics within the variables, I use an autoregressive distributed lag (ADL) model including the lagged values of the variables. The result shows that the net cooperation of Japan-China negatively affect the Japanese approval ratings, and that of South Korea-Japan also negatively influence the South Korean approval ratings."
+keywords: "these, always seem silly, to me, given google, but regardless"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 fontsize: 11pt
 spacing: single
-bibliography: \dummy{`r file.path(getwd(), 'cryingdoves')`}
+bibliography: \dummy{`r file.path(getwd(),'cryingdoves')`}
 biblio-style: apsr
 citecolor: black
 linkcolor: black
@@ -36,7 +34,43 @@ library(tidyverse)
 
 Does cooperative behavior toward neighboring countries affect domestic politics? Actually, many scholars focus on the effect of conflictual event on domestic politics. For example, diversionary theory explains that leaders are more likely to use force against other countries when they have domestic turmoil such as low economic growth. The point is that when a state has external conflict the leaders can get a better position in the domestic politics by distracting the public’s attention from domestic issues toward external conflict. Similarly, the rally-’round-the-flag effect focuses on the public’s tendency to support its government when it has an external threat. For instance, in July 2017, the lowest Japanese cabinet’s approval rating was reported in the Yomiuri Shimbun, 36%.^[Yomiuri poll was conducted on 7-9 July. More details can be seen on the following link (http://www.yomiuri.co.jp/election/poll/20170710-OYT8T50024.html).] The reason for the rapid decrease in the approval rating is the Japanese prime minister, Shinzo Abe’s domestic scandals. Even though his efforts to end the scandals were not successful, his cabinet approval rating recovered the following month because of North Korea’s series of missile tests and China’s assertive attitude in the East China Sea. The rally effect is not limited to the severe threat. When the former Korean President, Lee Myung-bak, visited a disputed island between South Korea and Japan in 2012, his approval ratings increased about 9 percent [@Gallup2012]. 
 
+  Likewise, each state has ongoing conflict issues. Japan and South Korea have a disputed island and Japan has a maritime dispute with China, and both Japan and South Korea feel threatened by North Korea. Of course, those ongoing conflicts influence domestic politics, particularly, the president or prime minister’s approval ratings. However, focusing on the conflicts is not enough to explain the effect of external relationships on domestic politics. Admittedly, the militarized disputes are so dramatic that the public is more likely to respond to them, the public also responds to cooperative events, such as signing an agreement or a summit. Furthermore, when the disputed countries are neighbors, discrete periods of conflicts cannot capture the characteristic of the interactions among them. For instance, despite the conflictual events, the disputants possibly meet each other to manage the conflict, or the disputants may have cooperative events in various areas.
 
+  In this regard, I focus on not just conflictual events but cooperative events and their effect on domestic politics of disputed neighboring countries. ln general, international issues are not salient enough to capture the public’s attention except for interstate wars which probably generate casualties. However, when a state has one or more than one neighboring state sharing ongoing disputed issues, the public is more likely to pay attention to the international issues. Moreover, citizens of the disputed countries are more likely to care about not just the ongoing conflicts but the cooperative behaviors from or toward the disputed state. For this reason, I claim that a relationship between neighboring states needs to be considered as a continuous one based on both conflictual and cooperative events. In order to capture the relationships among the neighboring states, I use a machine-coded event data set from the Global Database of Events, Language, and Tone (GDELT) Project. This event data set includes the Goldstein score, scaled from the most conflictual event (-10), to the most cooperative event (+10). Since the scale contains cooperative scores, it can better represent the ongoing relations between disputed countries. 
+
+  In this paper, I examine the effect of the external relations on approval ratings in Japan and South Korea respectively. I take these two cases, because firstly, both have ongoing conflicts with neighboring states such as territorial disputes and nuclear threats from North Korea, and secondly, the significant range of the presidential or cabinet approval ratings are available. The Japanese cabinet approval ratings are from February 1986 to July 2017 and the South Korean presidential approval ratings are from March 1993 to September 2016. The Japanese cabinet approval ratings are drawn from the Yomiuri Shimbun, which conducted polls monthly. And the South Korean presidential approval ratings are taken from the Research & Research. As for the external relations of Japan, I focus on three neighboring countries, China, South Korea, and North Korea. Indeed, China and South Korea similarly have disputed islands with Japan—the Senkaku/Diaoyu islands in the East China Sea and the Liancourt Rocks (referred to as Takeshima in Japan, and Dokdo in South Korea). North Korea has been a severe threat to Japan because of their missile launches and nuclear experiments and, on the other hand, North Korea’s abduction of Japanese citizens is still an ongoing problem between Japan and North Korea. As for South Korea, I focus on the relationships with two neighboring states, Japan and North Korea. South Korea has the disputed area with Japan as mentioned above, and both Koreas have had continuous conflictual events in the aftermath of the Korean War. 
+
+  The specific questions in this paper are as follows: do external relations with neighboring states affect approval ratings? Specifically, do cooperative behaviors matter? If the overall relations matter, then which neighboring states are more important in the change of approval ratings? In this paper, I contend that not just conflictual behaviors but also cooperative behaviors affect the approval ratings. In terms of the significance of the effect, I expect that relations with rival countries have more impact on the approval. Of course, rivalry can be defined in various ways, but in this paper, I focus on the citizens’ perception of rivalry. In this way, the rivalry is not necessarily reciprocal. Even though South Korean people think of Japan as their rival, Japanese people may not consider South Korea in the same way. I expect that Japanese citizens are more likely to respond to the relationship with China compared to those with South Korea and North Korea, and South Korean citizens are more likely to respond to the South Korean-Japanese relations rather than the two Korean relations. 
+
+  This paper proceeds as follows. First, I present arguments in terms of the relationship between external relations and approval focusing on the diversionary theory and the rally effect. Second, I argue that the overall relations with neighboring countries affect the approval, particularly, when the counterpart is considered a rival. Before I suggest a model, I examine the direction of the relationship among the variables since there could be an endogeneity problem. Thus, to examine the direction of the relationship I conduct the Granger Causality test using a vector autoregression (VAR) model. After checking the direction of the effect, I present a single equation model focusing on the approval, conduct a linear regression model including lagged independent and dependent variables, and discuss the results.
+      
+# The Effect of Conflict and Cooperation on Domestic Politics 
+
+## External Relations and Approval
+
+There are many studies about public approval, specifically, the factors affecting approval ratings. @Ostrom1992 examine the effects of quality-of-life outcomes, extraordinary events, and ordinary events on the approval focusing on the US presidential approval ratings. They argue that there is an equilibrium between the approval and the quality-of-life outcomes such as unemployment rate and inflation. Thus, when a critical change occurs in the unemployment rate or inflation, the approval rating adjusts following the change. They also argue that extraordinary political events can affect the equilibrium unlike ordinary events. According to their argument, the effects of ordinary events are conditional and do not last long while those of extraordinary events change the overall equilibrium of approval. In their study, the assassination attempt on President Reagan, and the Iran-Contra scandal are coded as extraordinary events [@Ostrom1992]. Ostrom and Smith contribute to the understanding of the dynamics in US presidential approval by distinguishing the effects of extraordinary and ordinary events. However, more studies are necessary regarding what kind of events or actions affect the approval. 
+
+## Diversionary Use of Force and Rally-’Round-the-Flag Effect 
+
+Many scholars focus on conflictual events to explain the relationships between international relations and domestic politics. First, diversionary theory points out the effect of lower popularity or lower approval on the use of force. According to the diversionary theory, when leaders suffer from domestic turmoil, they are more likely to use force toward other countries to distract the public’s attention from domestic issues and toward external conflict. For instance, @Oneal2006 explain whether economic turmoil such as low economic growth affects the probability of interstate conflict. On the other hand, some scholars focus on the effect of external conflict on approval ratings, especially the rally-round-the-flag effect. When a country is involved in an international crisis, the public is more likely to support the government, thus, the approval ratings will increase.
+
+  In fact, the directions between external conflict and approval are different in the diversionary theory and the rally effect. For the diversionary theory, the direction is from approval to external conflict whereas the direction in the rally effect is from external conflict to approval. Even though they have different focuses, they can be combined depending on the initiator of the crisis. First, suppose that State A suffers from domestic turmoil and lower approval. If a leader of State A initiates an external crisis toward State B, and that leads to an increase of the leader’s approval, then the directions of external conflict and approval can be described as follows: Approval (A) $\rightarrow$ External Conflict (A to B) $\rightarrow$ Approval (A). On the other hand, regardless of the approval in State A, State B can initiate the conflict with State A, and which can affect A’s approval as such: External Conflict (B to A) $\rightarrow$ Approval (A). The probable endogeneity problem will be discussed at the next part.
+  
+## In the Context of Rivalry
+
+Regarding the rally effect, some scholars suggest more specific conditions which can influence the rally effect. For instance, @Mitchell2004 point out rivalry among countries. In their study, they explain that diversionary behavior is more likely to be observed among rival countries since those countries having a rival counterpart possess more opportunities for diversionary uses of force which can facilitate a rally effect [@Mitchell2004].
+
+  Apart from the diversionary theory and the rally effect, @Colaresi2004 focuses on the effect of cooperation on the leadership turnover in the context of rivalry. Specifically, Colaresi argues that when leaders overcooperate with rival countries, they are more likely to be removed due to the loss of the public’s support. For that reason, in the rivalry dyads, leaders are more likely to take the hawkish way to stay in office [@Colaresi2004]. Both studies imply that the effect of conflict or cooperation can vary depending on the rivalry condition.
+  
+  Considering the rivalry condition, I contend that conflict or cooperation with neighboring countries affect approval ratings more in the context of rivalry. When the counterpart is a rival, and the public perceive the country as a rival, then the cooperative events may lead to lower approval ratings. Of course, @Colaresi2004 uses specific words—overcooperartion—but in this paper, I focus on the general cooperation. Indeed, in the rivalry context, the public may think any cooperative behavior would be overcooperartion. This leads to my hypothesis below:
+
+> Hypothesis 1: Cooperative behaviors are more likely to negatively affect approval ratings when the counterpart is a rival.   
+
+# Research Design
+
+Since I focus on two cases, Japan and South Korea, I set a model for each case. The first dependent variable is Japanese cabinet approval ratings which are measured by the Yomiuri Shimbun survey. The Yomiuri Shimbun has conducted this monthly survey, and the survey question is: Do you support the current cabinet or not. The results of the poll can be found at the Yomiuri Shimbun database.^[https://database.yomiuri.co.jp/rekishikan/] I use the cabinet approval ratings of the regular survey from February 1987 to July 2017. The total time points are 378 months, and 16 points are missing. Half of the missing values are generated because of the transition of the cabinet. In the last month of the cabinet, and just before the election, the question of cabinet support was not included in the survey. Since time series analysis is sensitive to the missing values, I use the previous approval rating for the missing value.
+
+  As for the South Korean presidential approval ratings, they are drawn from the Research & Research. This is a quarterly approval rating and the range of the approval ratings are from 1993 to 2014, thus the total number of observations is __. 
 
 ```{r mtcars}
 summary(mtcars)
@@ -49,29 +83,6 @@ summary(mtcars)
 ## Including Plots
 
 You can also embed plots, for example:
-
-```{r dotwhisker_plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:dotwhisker_plot}Dot-and-Whisker Plot Example"}
-m1 <- lm(mpg ~ wt + cyl + disp + gear, data = mtcars)
-m2 <- update(m1, . ~ . + hp) # add another predictor
-m3 <- update(m2, . ~ . + am) # and another 
-
-dwplot(list(m1, m2, m3),
-       vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2)) %>% # plot line at zero _behind_ coefs
-    relabel_predictors(c(wt = "Weight",                       
-                         cyl = "Cylinders", 
-                         disp = "Displacement", 
-                         hp = "Horsepower", 
-                         gear = "Gears", 
-                         am = "Manual")) +
-     theme_bw() + xlab("Coefficient Estimate") + ylab("") +
-     geom_vline(xintercept = 0, colour = "grey60", linetype = 2) +
-     ggtitle("Predicting Gas Mileage") +
-     theme(plot.title = element_text(face="bold"),
-           legend.position = c(0.007, 0.01),
-           legend.justification = c(0, 0), 
-           legend.background = element_rect(colour="grey80"),
-           legend.title = element_blank()) 
-```
 
 Figure \ref{fig:dotwhisker_plot} is a plot made in the \texttt{dotwhisker} package [@Solt2015c]. Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
