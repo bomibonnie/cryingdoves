@@ -1,0 +1,93 @@
+---
+output: 
+  pdf_document:
+    citation_package: natbib
+    keep_tex: false
+    fig_caption: true
+    latex_engine: pdflatex
+    template: C:/Users/bomim/Documents/cryingdoves/paper/svm-latex-ms2.tex
+title: "Does Cooperation with Neighboring Countries Matter?
+The Dynamics of External Relations and Approval Ratings in Japan and South Korea"
+
+thanks: "The paper's revision history and the materials needed to reproduce its analyses can be found [on Github here](http://github.com/bomibonnie/cryingdoves). Corresponding author: [bomi-lee-1@uiowa.edu](mailto:bomi-lee-1@uiowa.edu). Current version: `r format(Sys.time(), '%B %d, %Y')`."
+author:
+- name: Bomi Lee
+  affiliation: University of Iowa
+abstract: "In general, international issues are less salient than domestic issues to the public, but the diversionary theory and the rally-’round-the-flag effect explain that some types of conflictual external events can be salient enough to capture the public’s attention, which leads to the public’s support for the leaders. Although the conflictual external events are the part of a relationship, those are not equal to the relationship. In this context, I examine the effect of net cooperation on approval ratings considering all types of events from the most conflictual events to the most cooperative events. The event data are drawn from the Temporally Extended, Regular, Reproducible International Event Records (TERRIER) Project and each event is weighted by the Goldstein score. As for the approval ratings, I focus on the Japanese cabinet approval ratings from February 1986 to July 2017, and the South Korean presidential approval ratings from March 1993 to December 2014. Since there could be an endogeneity problem, I conduct the Granger Causality test and IRFs using a VAR model, and set a single equation based on the result. Considering the dynamics within the variables, I use an autoregressive distributed lag (ADL) model including the lagged values of the variables. The result shows that the net cooperation of Japan-China negatively affect the Japanese approval ratings, and that of South Korea-Japan also negatively influence the South Korean approval ratings."
+keywords: ", always seem silly, to me, given google, but regardless"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+fontsize: 11pt
+spacing: single
+bibliography: \dummy{`r file.path(getwd(), 'cryingdoves')`}
+biblio-style: apsr
+citecolor: black
+linkcolor: black
+endnote: no
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# load all the packages you will use below 
+library(dotwhisker)
+library(tidyverse)
+```
+
+# Introduction to RMarkdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r mtcars}
+summary(mtcars)
+```
+
+---
+# This is a comment, set off with --- and started with #.  Comments are good for notes to self that you don't want to show up in the output.  Below is LaTeX code for a page break.
+---
+\pagebreak 
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r dotwhisker_plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:dotwhisker_plot}Dot-and-Whisker Plot Example"}
+m1 <- lm(mpg ~ wt + cyl + disp + gear, data = mtcars)
+m2 <- update(m1, . ~ . + hp) # add another predictor
+m3 <- update(m2, . ~ . + am) # and another 
+
+dwplot(list(m1, m2, m3),
+       vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2)) %>% # plot line at zero _behind_ coefs
+    relabel_predictors(c(wt = "Weight",                       
+                         cyl = "Cylinders", 
+                         disp = "Displacement", 
+                         hp = "Horsepower", 
+                         gear = "Gears", 
+                         am = "Manual")) +
+     theme_bw() + xlab("Coefficient Estimate") + ylab("") +
+     geom_vline(xintercept = 0, colour = "grey60", linetype = 2) +
+     ggtitle("Predicting Gas Mileage") +
+     theme(plot.title = element_text(face="bold"),
+           legend.position = c(0.007, 0.01),
+           legend.justification = c(0, 0), 
+           legend.background = element_rect(colour="grey80"),
+           legend.title = element_blank()) 
+```
+
+Figure \ref{fig:dotwhisker_plot} is a plot made in the \texttt{dotwhisker} package [@Solt2015c]. Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Citations
+Want to cite something?
+
+1. Find your cite key in your bib file.
+1. Put an @ before it, like @Solt2017, or whatever it is
+1. @Solt2017 creates an in-text citation
+1. [@Herndon2014] creates a parenthetical citation
+
+As @Gelman2014 note, the garden of forking paths can pose problems for researchers even when they are acting in good faith.
+
+## Other Common Things
+
+> This will create a block quote, if you want one.
+
+Dropping a footnote is easy.^[See? Not hard at all.]
+
