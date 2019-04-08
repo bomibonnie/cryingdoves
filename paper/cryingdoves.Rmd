@@ -72,10 +72,14 @@ Regarding the rally effect, some scholars suggest more specific conditions which
 
 Since I focus on two cases, Japan and South Korea, I set a model for each case. The first dependent variable is Japanese cabinet approval ratings which are measured by the Yomiuri Shimbun survey. The Yomiuri Shimbun has conducted this monthly survey, and the survey question is: Do you support the current cabinet or not. The results of the poll can be found at the Yomiuri Shimbun database.^[https://database.yomiuri.co.jp/rekishikan/] I use the cabinet approval ratings of the regular survey from February 1987 to July 2017. The total time points are 378 months, and 16 points are missing. Half of the missing values are generated because of the transition of the cabinet. In the last month of the cabinet, and just before the election, the question of cabinet support was not included in the survey. Since time series analysis is sensitive to the missing values, I use the previous approval rating for the missing value.
 
+---
+# Add the Japanese cabinet approval ratings here
+---
+
   As for the South Korean presidential approval ratings, they are drawn from the Research & Research. This is a quarterly approval rating and the range of the approval ratings are from 1993 to 2014, thus the total number of observations is 88.
   
 
-```{r plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot}Plot Example"}
+```{r plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot}South Korean Approval Ratings"}
 doves_kor <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_kor.csv")
 doves_kor$quarter = as.yearqtr(doves_kor$quarterly, format = "%Yq%q")
 app <- xts(doves_kor$approval, doves_kor$quarter)
@@ -88,29 +92,47 @@ plot(as.zoo(app),
      main = "South Korean President Approval Ratings")
 ```
 
----
-# This is a comment, set off with --- and started with #.  Comments are good for notes to self that you don't want to show up in the output.  Below is LaTeX code for a page break.
----
-\pagebreak 
-## Including Plots
+  The core independent variables are net cooperation scores of the dyads. The scores of net cooperation are taken from the Global Database of Events, Language, and Tone (GDELT) dataset. The GDELT dataset is one of the machine-coded datasets where news reports of events are coded using the dyadic Conflict and Mediation Event Observations Event and Actor Codebook (CAMEO) format. For instance, when one piece of news is reported, then the event is coded following the CAMEO code, and Actor 1 and Actor 2 are specified where Actor 1 is a sender and Actor 2 is a target. Additionally, GDELT includes the Goldstein score, thus each event is scaled from the most conflictual event (-10) to the most cooperative event (+10). This Goldstein scale was created and introduced by Goldstein (1992), and using the scale, each event can be weighted differently. For instance, when the news is reported, the event is coded following the CAMEO codes, and each CAMEO code is assigned the Goldstein score, thus each event can be weighted in the spectrum of cooperation and conflict. I use the mean of the weighted events during the month as the net cooperation score. This net cooperation score is used in @Lebo2003 and @Rajmaira1997 as well. Also, I use directed net cooperation scores considering all events related to the dyad. Thus, for the Japanese case, I include 3 dyads, Japan-China, Japan-South Korea, and Japan-North Korea. For the Korean case, I consider 3 dyads, South Korea-Japan, South Korea-China, and South Korea-North Korea. Below are the net cooperation scores of the dyads from the given period.
 
-You can also embed plots, for example:
+```{r plot2, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}Net Cooperation Scores"}
 
-Figure \ref{fig:dotwhisker_plot} is a plot made in the \texttt{dotwhisker} package [@Solt2015c]. Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+gold_kj <- xts(doves_kor$kj_q, doves_kor$quarter)
+gold_kc <- xts(doves_kor$kc_q, doves_kor$quarter)
+gold_kp <- xts(doves_kor$kp_q, doves_kor$quarter)
 
-## Citations
-Want to cite something?
+par(mfrow = c(2, 2))
 
-1. Find your cite key in your bib file.
-1. Put an @ before it, like @Solt2017, or whatever it is
-1. @Solt2017 creates an in-text citation
-1. [@Herndon2014] creates a parenthetical citation
+plot(as.zoo(gold_kj),
+     col = "steelblue",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Quarterly)",
+     main = "South Korea-Japan")
 
-As @Gelman2014 note, the garden of forking paths can pose problems for researchers even when they are acting in good faith.
+plot(as.zoo(gold_kc),
+     col = "steelblue",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Quarterly)",
+     main = "South Korea-China")
 
-## Other Common Things
+plot(as.zoo(gold_kp),
+     col = "steelblue",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Quarterly)",
+     main = "South Korea-North Korea")
 
-> This will create a block quote, if you want one.
+```  
 
-Dropping a footnote is easy.^[See? Not hard at all.]
+As for the rivalry relationship, firstly, I consider the five levels of a relationship from @Goertz2016. More specifically, they develop five levels of a peace scale—severe rivalry, lesser rivalry, negative peace, warm peace, and security communities considering the existence of conflict, war plans, main issues of conflict, communication, diplomacy, and agreement. In their data set, the relationship between Japan and North Korea was a lesser rivalry from 1986 to 1994 but it changed to a severe rivalry in 1994. The relationship between Japan and South Korea is a lesser rivalry in the given period, and that of Japan and China is also a lesser rivalry during the period. On the other hand, the relationship between South Korea and North Korea is a severe rivalry since both states were created. Thus, both Japan and South Korea have a severe rivalry relationship with North Korea and other dyads are in the lesser rivalry level according to the peace scale data. 
 
+  However, it is difficult to expect that North Korea is perceived as a rival to both states. As @Thompson2002 points out, the rivalry relationship is not just related to the number of militarized disputes but to the threat perception and hostility. Even though he focuses on the decision maker’s perception of rivalry, the change of public approval is closely related to the public’s threat perception. According to the Yomiuri and Gallup Joint Opinion Survey data, the respondents who answer that China is a military threat to Japan have increased over time (54.5 % in 2006, 79% in 2010, and 83% in 2014). On the other hand, the percentages of the respondents answering that North Korea is a military threat to Japan have maintained over time (79.6% in 2006, 84% in 2010, and 71% in 2014). Contrary to that, South Korea has obtained the lower percentages during the given period (24.4% in 2006, 18% in 2010, and 41% in 2014). Although the peace scale data show the different levels of the relationship for the Japan-China, and the Japan-North Korea dyads, the threat perceptions of the Japanese citizens toward China and North Korea are not significantly different. On the other hand, the survey results conducted by Korea Gallup show that 31.3% of the respondents answer that Japan is a military threat to South Korea in 2001. This value is slightly higher than the percentage of North Korea (29.7%). Another survey carried out by Korea Institute for Defense Analysis reports that 23.6% of the respondents say that Japan is a military threat to South Korea, which is the second highest rank. In the survey, China records the first rank by 37.7%, and North Korea is the 3rd rank by 20.7%. Since the Japanese citizens consider both China and North Korea as military threats, and the South Korean citizens perceive both North Korea and Japan as military threats, those threat perceptions should be considered for the understanding of the rivalry relationship. 
+  
+  For the control variables, I take the @Ostrom1992 model, thus I include unemployment rate and inflation. Both data are taken from the Organization for Economic Co-operation and Development (OECD) database. The unemployment rate is the percentage of the unemployed people among the labor forces. I use the consumer price index (CPI) for inflation.^[More details can be found on the OECD database (https://data.oecd.org/unemp/unemployment-rate.htm; https://data.oecd.org/price/inflation-cpi.htm).] Adding to those variables, I include a new cabinet or new president variable for each model, coded 1 for a new cabinet/president and 0 otherwise. Since there is a tendency for a new cabinet/president to get more support in the first month, thus I consider the effect as a control variable. 
+  
+# Direction of the Relationship between External Relations and Approval
+
+As stated above, there could be an endogeneity problem within the variables. External relations regardless of cooperation and conflict can affect the approval, but at the same time, the approval ratings can affect the external relations like the following equations.
+
+$$Approval_{t} = \sum_{i=1}^{p} \alpha_{i}Approval_{t-1} + \sum_{j=0}^{q}\sum_{k=1}^{r} \beta_{jk} Net cooperation_{t-j} + \epsilon_{1t}$$
