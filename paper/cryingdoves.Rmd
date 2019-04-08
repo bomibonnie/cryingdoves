@@ -26,8 +26,10 @@ endnote: no
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 # load all the packages you will use below 
-library(dotwhisker)
+library(haven)
 library(tidyverse)
+library(zoo)
+library(quantmod)
 ```
 
 # Introduction 
@@ -70,10 +72,20 @@ Regarding the rally effect, some scholars suggest more specific conditions which
 
 Since I focus on two cases, Japan and South Korea, I set a model for each case. The first dependent variable is Japanese cabinet approval ratings which are measured by the Yomiuri Shimbun survey. The Yomiuri Shimbun has conducted this monthly survey, and the survey question is: Do you support the current cabinet or not. The results of the poll can be found at the Yomiuri Shimbun database.^[https://database.yomiuri.co.jp/rekishikan/] I use the cabinet approval ratings of the regular survey from February 1987 to July 2017. The total time points are 378 months, and 16 points are missing. Half of the missing values are generated because of the transition of the cabinet. In the last month of the cabinet, and just before the election, the question of cabinet support was not included in the survey. Since time series analysis is sensitive to the missing values, I use the previous approval rating for the missing value.
 
-  As for the South Korean presidential approval ratings, they are drawn from the Research & Research. This is a quarterly approval rating and the range of the approval ratings are from 1993 to 2014, thus the total number of observations is __. 
+  As for the South Korean presidential approval ratings, they are drawn from the Research & Research. This is a quarterly approval rating and the range of the approval ratings are from 1993 to 2014, thus the total number of observations is 88.
+  
 
-```{r mtcars}
-summary(mtcars)
+```{r plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot}Plot Example"}
+doves_kor <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_kor.csv")
+doves_kor$quarter = as.yearqtr(doves_kor$quarterly, format = "%Yq%q")
+app <- xts(doves_kor$approval, doves_kor$quarter)
+
+plot(as.zoo(app),
+     col = "steelblue",
+     lwd = 2,
+     ylab = "Presidential Approval Ratings (%)",
+     xlab = "Date (Quarterly)",
+     main = "South Korean President Approval Ratings")
 ```
 
 ---
