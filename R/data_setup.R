@@ -327,12 +327,9 @@ doves_datm <- app_m %>%
                          ifelse((year==1998)&(month==3), 1, 
                                 ifelse((year==2003)&(month==3), 1,
                                        ifelse((year==2008)&(month==3), 1,
-                                              ifelse((year==2013)&(month==3), 1,0))))),
-         monthly= paste0(year, "m", month))
-
+                                              ifelse((year==2013)&(month==3), 1,0))))))
+        
 write.csv(doves_datm, "data//doves_korm.csv", row.names = FALSE, na = "")
-
-
 
 ## Quarterly
 doves_datq <- app_df %>%
