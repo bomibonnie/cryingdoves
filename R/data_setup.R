@@ -215,6 +215,8 @@ doves_dat <- app_df %>%
                          ifelse((year==1998)&(quarter==1), 1, 
                                 ifelse((year==2003)&(quarter==1), 1,
                                        ifelse((year==2008)&(quarter==1), 1,
-                                              ifelse((year==2013)&(quarter==1), 1,0))))))
+                                              ifelse((year==2013)&(quarter==1), 1,0))))),
+         quarterly= paste0(year, "q", quarter))
 
 write.csv(doves_dat, "data//doves_kor.csv", row.names = FALSE, na = "")
+
