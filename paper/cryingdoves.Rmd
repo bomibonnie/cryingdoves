@@ -135,4 +135,8 @@ As for the rivalry relationship, firstly, I consider the five levels of a relati
 
 As stated above, there could be an endogeneity problem within the variables. External relations regardless of cooperation and conflict can affect the approval, but at the same time, the approval ratings can affect the external relations like the following equations.
 
-$$Approval_{t} = \sum_{i=1}^{p} \alpha_{i}Approval_{t-1} + \sum_{j=0}^{q}\sum_{k=1}^{r} \beta_{jk} Net cooperation_{t-j} + \epsilon_{1t}$$
+$$Approval_{t} = \sum_{i=1}^{p} \alpha_{i}Approval_{t-1} + \sum_{j=0}^{q}\sum_{k=1}^{r} \beta_{jk} Net Cooperation_{t-j} + \epsilon_{1t}$$
+$$NetCooperation_{t} = \sum_{l=0}^{s}\sum_{m=1}^{t} \delta_{lm} Net Cooperation_{t-1} + \sum_{n=0}^{u} \gamma_{n} Approval_{t-n} + \epsilon_{2t}$$
+Thus, in order to figure out the direction of the relationship I conduct the Granger Causality test using a vector autoregression (VAR) model.
+
+  In the first model of the Japanese case, the result of Granger Causality test shows that the direction of the relationship flows from Japan-China relations to approval ratings. The Granger causality test is an equation where y is regressed on a lagged value or values of y and a lagged value or values of x. The null hypothesis is that x does not “Granger cause” y [@Box-Steffensmeier2009].
