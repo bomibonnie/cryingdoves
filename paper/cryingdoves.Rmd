@@ -30,6 +30,8 @@ library(haven)
 library(tidyverse)
 library(zoo)
 library(quantmod)
+library(tseries)
+library(vars)
 ```
 
 # Introduction 
@@ -82,7 +84,7 @@ Since I focus on two cases, Japan and South Korea, I set a model for each case. 
 ```{r plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot}South Korean Approval Ratings"}
 doves_kor <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_kor.csv")
 doves_kor$quarter = as.yearqtr(doves_kor$quarterly, format = "%Yq%q")
-app <- xts(doves_kor$approval, doves_kor$quarter)
+app <- ts(doves_kor$approval, doves_kor$quarter)
 
 plot(as.zoo(app),
      col = "steelblue",
@@ -96,9 +98,9 @@ plot(as.zoo(app),
 
 ```{r plot2, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}Net Cooperation Scores"}
 
-gold_kj <- xts(doves_kor$kj_q, doves_kor$quarter)
-gold_kc <- xts(doves_kor$kc_q, doves_kor$quarter)
-gold_kp <- xts(doves_kor$kp_q, doves_kor$quarter)
+gold_kj <- ts(doves_kor$kj_q, doves_kor$quarter)
+gold_kc <- ts(doves_kor$kc_q, doves_kor$quarter)
+gold_kp <- ts(doves_kor$kp_q, doves_kor$quarter)
 
 par(mfrow = c(2, 2))
 
@@ -140,3 +142,9 @@ $$NetCooperation_{t} = \sum_{l=0}^{s}\sum_{m=1}^{t} \delta_{lm} Net Cooperation_
 Thus, in order to figure out the direction of the relationship I conduct the Granger Causality test using a vector autoregression (VAR) model.
 
   In the first model of the Japanese case, the result of Granger Causality test shows that the direction of the relationship flows from Japan-China relations to approval ratings. The Granger causality test is an equation where y is regressed on a lagged value or values of y and a lagged value or values of x. The null hypothesis is that x does not “Granger cause” y [@Box-Steffensmeier2009].
+
+```{r VAR, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}IRFs"}
+VAR_data <- window(ts.union(app, gold_kj, gold_kc, gold_kp))
+VAR_est <- VAR(y = VAR_data, p = 2)
+
+```
