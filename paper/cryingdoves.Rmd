@@ -32,11 +32,11 @@ library(dotwhisker)
 library(tidyverse)
 ```
 
-# Introduction to RMarkdown
+# Introduction 
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+Does cooperative behavior toward neighboring countries affect domestic politics? Actually, many scholars focus on the effect of conflictual event on domestic politics. For example, diversionary theory explains that leaders are more likely to use force against other countries when they have domestic turmoil such as low economic growth. The point is that when a state has external conflict the leaders can get a better position in the domestic politics by distracting the public’s attention from domestic issues toward external conflict. Similarly, the rally-’round-the-flag effect focuses on the public’s tendency to support its government when it has an external threat. For instance, in July 2017, the lowest Japanese cabinet’s approval rating was reported in the Yomiuri Shimbun, 36%.^[Yomiuri poll was conducted on 7-9 July. More details can be seen on the following link (http://www.yomiuri.co.jp/election/poll/20170710-OYT8T50024.html).] The reason for the rapid decrease in the approval rating is the Japanese prime minister, Shinzo Abe’s domestic scandals. Even though his efforts to end the scandals were not successful, his cabinet approval rating recovered the following month because of North Korea’s series of missile tests and China’s assertive attitude in the East China Sea. The rally effect is not limited to the severe threat. When the former Korean President, Lee Myung-bak, visited a disputed island between South Korea and Japan in 2012, his approval ratings increased about 9 percent [@Gallup2012]. 
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
 
 ```{r mtcars}
 summary(mtcars)
