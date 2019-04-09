@@ -34,6 +34,8 @@ library(xts)
 library(quantmod)
 library(tseries)
 library(vars)
+library(stargazer)
+library(kableExtra)
 ```
 
 # Introduction 
@@ -108,9 +110,9 @@ autoplot(app_q) +
 
 ```{r plot2, fig.width = 7, fig.height = 6, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}Net Cooperation Scores"}
 
-gold_kj_m <- as.xts(doves_korm$kj_m, order.by=doves_korm$mdate)
-gold_kc_m <- as.xts(doves_korm$kc_m, order.by=doves_korm$mdate)
-gold_kp_m <- as.xts(doves_korm$kp_m, order.by=doves_korm$mdate)
+gold_kj_m <- ts(doves_korm$kj_m, doves_korm$mdate)
+gold_kc_m <- ts(doves_korm$kc_m, doves_korm$mdate)
+gold_kp_m <- ts(doves_korm$kp_m, doves_korm$mdate)
 
 par(mfrow = c(2, 2))
 
@@ -135,9 +137,9 @@ plot(as.zoo(gold_kp_m),
      xlab = "Date (Monthly)",
      main = "South Korea-North Korea")
 
-gold_kj_q <- as.xts(doves_korq$kj_q, order.by=doves_korq$qdate)
-gold_kc_q <- as.xts(doves_korq$kc_q, order.by=doves_korq$qdate)
-gold_kp_q <- as.xts(doves_korq$kp_q, order.by=doves_korq$qdate)
+gold_kj_q <- ts(doves_korq$kj_q, doves_korq$qdate)
+gold_kc_q <- ts(doves_korq$kc_q, doves_korq$qdate)
+gold_kp_q <- ts(doves_korq$kp_q, doves_korq$qdate)
 
 par(mfrow = c(2, 2))
 
@@ -180,6 +182,23 @@ Thus, in order to figure out the direction of the relationship I conduct the Gra
 
   In the first model of the Japanese case, the result of Granger Causality test shows that the direction of the relationship flows from Japan-China relations to approval ratings. The Granger causality test is an equation where y is regressed on a lagged value or values of y and a lagged value or values of x. The null hypothesis is that x does not “Granger cause” y [@Box-Steffensmeier2009].
 
-```{r VAR, fig.width = 5, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}IRFs"}
+```{r VAR, fig.width = 3.5, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}IRFs"}
+
+app_mb <- ts(doves_korm$app_nom, doves_korm$mdate)
+VAR_datam <- window(cbind(app_mb, gold_kj_m, gold_kc_m, gold_kp_m))
+var_estm <- VAR(y = VAR_datam, p = 2)
+
+IRFm1 <- irf(var_estm, impulse = "app_mb", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFm2 <- irf(var_estm, impulse = "gold_kj_m", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFm3 <- irf(var_estm, impulse = "gold_kc_m", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFm4 <- irf(var_estm, impulse = "gold_kp_m", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+
+par(mfrow = c(2, 2))
+
+plot(IRFm1) 
+plot(IRFm2) 
+plot(IRFm3)
+plot(IRFm4)
+
 
 ```
