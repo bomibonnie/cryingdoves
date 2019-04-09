@@ -29,6 +29,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(haven)
 library(tidyverse)
 library(zoo)
+library(ggplot2)
+library(xts)
 library(quantmod)
 library(tseries)
 library(vars)
@@ -82,44 +84,79 @@ Since I focus on two cases, Japan and South Korea, I set a model for each case. 
   
 
 ```{r plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot}South Korean Approval Ratings"}
-doves_kor <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_kor.csv")
-doves_kor$quarter = as.yearqtr(doves_kor$quarterly, format = "%Yq%q")
-app <- ts(doves_kor$approval, doves_kor$quarter)
+doves_korm <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korm_nomiss.csv")
+doves_korq <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korq.csv")
 
-plot(as.zoo(app),
-     col = "steelblue",
-     lwd = 2,
-     ylab = "Presidential Approval Ratings (%)",
-     xlab = "Date (Quarterly)",
-     main = "South Korean President Approval Ratings")
+doves_korm$mdate = as.yearmon(paste(doves_korm$year, " ", doves_korm$month), format = "%Y %m")
+doves_korq$qdate = as.yearqtr(doves_korq$quarterly, format = "%Yq%q")
+
+app_m <- as.xts(doves_korm$app_nom, order.by=doves_korm$mdate)
+app_q <- as.xts(doves_korq$approval, order.by=doves_korq$qdate)
+
+autoplot(app_m) + 
+    labs(title = "South Korean Presidential Approval Ratings (Monthly)", x = "", y = "Approval Ratings (%)") + 
+    theme_bw()  +
+    geom_line(color = "dark blue")
+
+autoplot(app_q) + 
+    labs(title = "South Korean Presidential Approval Ratings (Quarterly)", x = "", y = "Approval Ratings (%)") + 
+    theme_bw() +
+    geom_line(color = "dark red")
 ```
 
   The core independent variables are net cooperation scores of the dyads. The scores of net cooperation are taken from the TERRIER dataset. The TERRIER dataset is one of the machine-coded datasets where news reports of events are coded using the dyadic Conflict and Mediation Event Observations Event and Actor Codebook (CAMEO) format. For instance, when one piece of news is reported, then the event is coded following the CAMEO code, and Actor 1 and Actor 2 are specified where Actor 1 is a sender and Actor 2 is a target. Additionally, TERRIER includes the Goldstein score, thus each event is scaled from the most conflictual event (-10) to the most cooperative event (+10). This Goldstein scale was created and introduced by Goldstein (1992), and using the scale, each event can be weighted differently. For instance, when the news is reported, the event is coded following the CAMEO codes, and each CAMEO code is assigned the Goldstein score, thus each event can be weighted in the spectrum of cooperation and conflict. I use the mean of the weighted events during the month as the net cooperation score. This net cooperation score is used in @Lebo2003 and @Rajmaira1997 as well. Also, I use directed net cooperation scores considering all events related to the dyad. Thus, for the Japanese case, I include 3 dyads, Japan-China, Japan-South Korea, and Japan-North Korea. For the Korean case, I consider 3 dyads, South Korea-Japan, South Korea-China, and South Korea-North Korea. Below are the net cooperation scores of the dyads from the given period.
 
-```{r plot2, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}Net Cooperation Scores"}
+```{r plot2, fig.width = 7, fig.height = 6, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}Net Cooperation Scores"}
 
-gold_kj <- ts(doves_kor$kj_q, doves_kor$quarter)
-gold_kc <- ts(doves_kor$kc_q, doves_kor$quarter)
-gold_kp <- ts(doves_kor$kp_q, doves_kor$quarter)
+gold_kj_m <- as.xts(doves_korm$kj_m, order.by=doves_korm$mdate)
+gold_kc_m <- as.xts(doves_korm$kc_m, order.by=doves_korm$mdate)
+gold_kp_m <- as.xts(doves_korm$kp_m, order.by=doves_korm$mdate)
 
 par(mfrow = c(2, 2))
 
-plot(as.zoo(gold_kj),
+plot(as.zoo(gold_kj_m),
      col = "steelblue",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (QMonthly)",
+     main = "South Korea-Japan")
+
+plot(as.zoo(gold_kc_m),
+     col = "steelblue",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Monthly)",
+     main = "South Korea-China")
+
+plot(as.zoo(gold_kp_m),
+     col = "steelblue",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Monthly)",
+     main = "South Korea-North Korea")
+
+gold_kj_q <- as.xts(doves_korq$kj_q, order.by=doves_korq$qdate)
+gold_kc_q <- as.xts(doves_korq$kc_q, order.by=doves_korq$qdate)
+gold_kp_q <- as.xts(doves_korq$kp_q, order.by=doves_korq$qdate)
+
+par(mfrow = c(2, 2))
+
+plot(as.zoo(gold_kj_q),
+     col = "darkred",
      lwd = 2,
      ylab = "Net Cooperation Scores",
      xlab = "Date (Quarterly)",
      main = "South Korea-Japan")
 
-plot(as.zoo(gold_kc),
-     col = "steelblue",
+plot(as.zoo(gold_kc_q),
+     col = "darkred",
      lwd = 2,
      ylab = "Net Cooperation Scores",
      xlab = "Date (Quarterly)",
      main = "South Korea-China")
 
-plot(as.zoo(gold_kp),
-     col = "steelblue",
+plot(as.zoo(gold_kp_q),
+     col = "darkred",
      lwd = 2,
      ylab = "Net Cooperation Scores",
      xlab = "Date (Quarterly)",
@@ -143,8 +180,6 @@ Thus, in order to figure out the direction of the relationship I conduct the Gra
 
   In the first model of the Japanese case, the result of Granger Causality test shows that the direction of the relationship flows from Japan-China relations to approval ratings. The Granger causality test is an equation where y is regressed on a lagged value or values of y and a lagged value or values of x. The null hypothesis is that x does not “Granger cause” y [@Box-Steffensmeier2009].
 
-```{r VAR, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}IRFs"}
-VAR_data <- window(ts.union(app, gold_kj, gold_kc, gold_kp))
-VAR_est <- VAR(y = VAR_data, p = 2)
+```{r VAR, fig.width = 5, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}IRFs"}
 
 ```
