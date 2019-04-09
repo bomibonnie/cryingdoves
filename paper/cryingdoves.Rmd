@@ -200,5 +200,20 @@ plot(IRFm2)
 plot(IRFm3)
 plot(IRFm4)
 
+IRFq1 <- irf(var_estq, impulse = "app_qb", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFq2 <- irf(var_estq, impulse = "gold_kj_q", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFq3 <- irf(var_estq, impulse = "gold_kc_q", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFq4 <- irf(var_estq, impulse = "gold_kp_q", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
 
+app_qb <- ts(doves_korq$approval, doves_korq$qdate)
+
+VAR_dataq <- window(cbind(app_qb, gold_kj_q, gold_kc_q, gold_kp_q))
+var_estq <- VAR(y = VAR_dataq, p = 2)
+
+windows()
+par(mfrow = c(2, 2))
+plot(IRFq1) 
+plot(IRFq2) 
+plot(IRFq3)
+plot(IRFq4)
 ```
