@@ -331,6 +331,14 @@ doves_datm <- app_m %>%
         
 write.csv(doves_datm, "data//doves_korm.csv", row.names = FALSE, na = "")
 
+doves_korm_nomiss <- doves_datm %>%
+   mutate(app_nom = ifelse(is.na(app_r)==TRUE, 14, app_r),
+         kj_m = ifelse(is.na(ko_jp_gol)==TRUE, 0, ko_jp_gol),
+         kc_m = ifelse(is.na(ko_ch_gol)==TRUE, 0, ko_ch_gol),
+         kp_m = ifelse(is.na(ko_pr_gol)==TRUE, 0, ko_pr_gol))
+
+write.csv(doves_korm_nomiss, "data//doves_korm_nomiss.csv", row.names = FALSE, na = "")
+
 ## Quarterly
 doves_datq <- app_df %>%
   left_join(gold_all_q, by = c("year", "quarter")) %>%
