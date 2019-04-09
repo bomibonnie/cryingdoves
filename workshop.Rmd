@@ -1,0 +1,212 @@
+---
+title: "Does Cooperation with Rival States Matter?"
+author: "Bomi Lee"
+date: "4/9/2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(haven)
+library(tidyverse)
+library(zoo)
+library(ggplot2)
+library(xts)
+library(quantmod)
+library(tseries)
+library(vars)
+```
+
+## Introduction
+
+<img src="Picture1.jpg" style="width: 300px;"/>
+<img src="Picture2.png" style="width: 330px;"/>
+
+## Rally Effects
+
+- External threat $\rightarrow$ Approval ratings
+
+## Cooperation in the Context of Rivalry
+
+Colaresi (2004)
+
+- Over-cooperation $\rightarrow$ Leadership turnover
+
+
+## Cooperation and Approval Ratings?
+
+- Hypothesis: Cooperative interactions with rival states are more likely to negatively affect approval ratings.
+
+
+## Reserach Design (DV1)
+
+DV: Korean Presidential approval ratings
+
+- Monthly (1993-2014)
+- Research & Research 
+
+```{r app_plot, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4}
+doves_korm <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korm_nomiss.csv")
+
+doves_korm$mdate = as.yearmon(paste(doves_korm$year, " ", doves_korm$month), format = "%Y %m")
+
+app_m <- as.xts(doves_korm$app_nom, order.by=doves_korm$mdate)
+
+autoplot(app_m) + 
+    labs(title = "South Korean Presidential Approval Ratings (Monthly)", x = "", y = "Approval Ratings (%)") + 
+    theme_bw()  +
+    geom_line(color = "dark blue")
+```
+
+## Reserach Design (DV2)
+
+DV: Korean Presidential approval ratings
+
+- Quarterly
+- Gallup Korea
+
+```{r app_plot2, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4}
+doves_korq <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korq.csv")
+
+doves_korq$qdate = as.yearqtr(doves_korq$quarterly, format = "%Yq%q")
+
+app_q <- as.xts(doves_korq$approval, order.by=doves_korq$qdate)
+
+autoplot(app_q) + 
+    labs(title = "South Korean Presidential Approval Ratings (Quarterly)", x = "", y = "Approval Ratings (%)") + 
+    theme_bw() +
+    geom_line(color = "dark red")
+```
+
+## Research Design (IV1)
+- Monthly aggregated Goldstein scores (-10 to +10)
+- TERRIER data
+- Directed dyad: Kor to Jpn, Kor to Chn, Kor to Prk
+```{r golplot, warning = FALSE, message = FALSE, echo = FALSE}
+
+gold_kj_m <- ts(doves_korm$kj_m, doves_korm$mdate)
+gold_kc_m <- ts(doves_korm$kc_m, doves_korm$mdate)
+gold_kp_m <- ts(doves_korm$kp_m, doves_korm$mdate)
+
+par(mfrow = c(2, 2))
+
+plot(as.zoo(gold_kj_m),
+     col = "steelblue",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (QMonthly)",
+     main = "South Korea-Japan")
+
+plot(as.zoo(gold_kc_m),
+     col = "steelblue",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Monthly)",
+     main = "South Korea-China")
+
+plot(as.zoo(gold_kp_m),
+     col = "steelblue",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Monthly)",
+     main = "South Korea-North Korea")
+```
+
+## Research Design (IV2)
+- Quarterly
+```{r golplot2, warning = FALSE, message = FALSE, echo = FALSE}
+
+gold_kj_q <- ts(doves_korq$kj_q, doves_korq$qdate)
+gold_kc_q <- ts(doves_korq$kc_q, doves_korq$qdate)
+gold_kp_q <- ts(doves_korq$kp_q, doves_korq$qdate)
+
+par(mfrow = c(2, 2))
+
+plot(as.zoo(gold_kj_q),
+     col = "darkred",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Quarterly)",
+     main = "South Korea-Japan")
+
+plot(as.zoo(gold_kc_q),
+     col = "darkred",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Quarterly)",
+     main = "South Korea-China")
+
+plot(as.zoo(gold_kp_q),
+     col = "darkred",
+     lwd = 2,
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Quarterly)",
+     main = "South Korea-North Korea")
+```
+
+## Research Design (Controls)
+
+- New Cabinet/President
+- Unemployment and inflation rates (Ostrom and Smith 1992)
+
+## Endogeneity Problem 
+
+- Granger causality test
+- Impulse response functions (IRFs)
+
+## Impulse Response Functions (Monthly) 1
+
+```{r VAR, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 4}
+
+app_mb <- ts(doves_korm$app_nom, doves_korm$mdate)
+VAR_datam <- window(cbind(app_mb, gold_kj_m, gold_kc_m, gold_kp_m))
+var_estm <- VAR(y = VAR_datam, p = 2)
+
+IRFm1 <- irf(var_estm, impulse = "app_mb", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFm2 <- irf(var_estm, impulse = "gold_kj_m", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFm3 <- irf(var_estm, impulse = "gold_kc_m", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFm4 <- irf(var_estm, impulse = "gold_kp_m", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+
+plot(IRFm1) 
+plot(IRFm2) 
+```
+
+## Impulse Response Functions (Monthly) 2
+
+```{r VAR2, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 4}
+
+plot(IRFm3)
+plot(IRFm4)
+```
+
+## Impulse Response Functions (Quarterly) 1
+
+```{r VAR3, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 4}
+app_qb <- ts(doves_korq$approval, doves_korq$qdate)
+
+VAR_dataq <- window(cbind(app_qb, gold_kj_q, gold_kc_q, gold_kp_q))
+var_estq <- VAR(y = VAR_dataq, p = 2)
+
+IRFq1 <- irf(var_estq, impulse = "app_qb", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFq2 <- irf(var_estq, impulse = "gold_kj_q", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFq3 <- irf(var_estq, impulse = "gold_kc_q", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+IRFq4 <- irf(var_estq, impulse = "gold_kp_q", n.ahead = 10, boot = TRUE, runs = 100, ci = 0.95)
+plot(IRFq1) 
+plot(IRFq2)
+```
+
+## Impulse Response Functions (Quarterly) 2
+
+```{r VAR4, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 4}
+
+plot(IRFq3)
+plot(IRFq4)
+```
+
+## Positive or Negative?
+
+```{r VAR5, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 3.5, fig.height = 4}
+
+plot(IRFm2)
+plot(IRFq2)
+```
