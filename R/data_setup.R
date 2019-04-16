@@ -146,6 +146,14 @@ for(t in 1994:2001){
   gold_totalm[[t-1993]] <- goldtm
 }
 
+########
+mydata <- map_dfr(1994:2001, function(t) {
+  namet <- paste0("data-raw/terrier-no-location-source-complete-", t, ".json.gz.tsv")
+  terrt <- import(namet)
+  goldtm <- gol_formatm(terrt)
+  return(goldtm)
+})
+
 # Download data @ flash drive
 
 for(t in 2002:2014){
