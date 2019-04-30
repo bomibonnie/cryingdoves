@@ -235,8 +235,8 @@ dwplot(list(ADL40, ADL41, ADL41b),
                          kj_q_ts = "KJ", 
                          kc_q_ts = "KC", 
                          kp_q_ts = "KP", 
-                         unemp_q_d_ts = "Unemployment(d)", 
                          "L(kp_q_ts)" = "KP(lag1)",
+                         unemp_q_d_ts = "Unemployment(d)", 
                          "L(unemp_q_d_ts)" = "Unemployment(d,lag1)",
                          newgov_q_ts = "New government")) +
     theme_bw() + xlab("Coefficient Estimate") + ylab("") +
@@ -263,8 +263,8 @@ dwplot(list(ADL120m, ADL121m, ADL121mb),
                          kj_m_ts = "KJ", 
                          kc_m_ts = "KC", 
                          kp_m_ts = "KP", 
-                         unemp_m_d_ts = "Unemployment(d)", 
                          "L(kp_m_ts)" = "KP(lag1)",
+                         unemp_m_d_ts = "Unemployment(d)", 
                          "L(unemp_m_d_ts)" = "Unemployment(d,lag1)",
                          newgov_m_ts = "New government")) +
     theme_bw() + xlab("Coefficient Estimate") + ylab("") +
@@ -277,6 +277,7 @@ dwplot(list(ADL120m, ADL121m, ADL121mb),
           legend.title = element_blank()) 
 
 ```
+
 ## Appendix: Stationarity Tests Results
 
 - Augmented Dickey-Fuller Test
