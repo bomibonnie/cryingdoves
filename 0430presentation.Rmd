@@ -1,0 +1,406 @@
+---
+title: "Does Cooperation with Rival States Matter?"
+author: "Bomi Lee"
+date: "4/30/2019"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(haven)
+library(tidyverse)
+library(zoo)
+library(ggplot2)
+library(xts)
+library(quantmod)
+library(tseries)
+library(vars)
+library(stargazer)
+library(knitr)
+library(kableExtra)
+library(dotwhisker)
+library(broom)
+library(dynlm)
+```
+
+## Introduction
+
+<img src="Picture1.jpg" style="width: 300px;"/>
+<img src="Picture2.png" style="width: 330px;"/>
+
+## Rally Effects
+
+- External threat $\rightarrow$ Approval ratings
+
+## Cooperation in the Context of Rivalry
+
+Colaresi (2004)
+
+- Over-cooperation $\rightarrow$ Leadership turnover
+
+
+## Cooperation and Approval Ratings?
+
+- Hypothesis: Cooperative interactions with rival states are more likely to negatively affect approval ratings.
+
+
+## Reserach Design (DV)
+
+DV: Korean Presidential approval ratings (1993-2014)
+
+- Monthly (Research & Research)
+
+- Quarterly (Gallup Korea)
+
+```{r app_plot, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 6, fig.height = 4}
+doves_korm <- read.csv("data/doves_korm_nomiss.csv")
+doves_korq <- read.csv("data/doves_korq.csv")
+
+doves_korm$mdate = as.yearmon(paste(doves_korm$year, " ", doves_korm$month), format = "%Y %m")
+app_m <- as.xts(doves_korm$app_nom, order.by=doves_korm$mdate)
+doves_korq$qdate = as.yearqtr(doves_korq$quarterly, format = "%Yq%q")
+app_q <- as.xts(doves_korq$approval, order.by=doves_korq$qdate)
+
+```
+
+## Reserach Design (DV)
+
+```{r app_plot2, echo = FALSE, warning = FALSE, message = FALSE, fig.width = 7, fig.height = 5}
+
+plot(as.zoo(app_m),
+     plot.type = "single", 
+     col = "steelblue",
+     lwd = 2,
+     ylim=c(10, 85),
+     xlab = "Date",
+     ylab = "Percent",
+     main = "Monthly and Quarterly Approval Ratings")
+par(new=TRUE)
+plot(as.zoo(app_q),
+     plot.type = "single", 
+     col = "darkred",
+     lwd = 2,
+     ylim=c(10, 85),
+     xlab = "Date",
+     ylab = "Percent",
+     main = "Monthly and Quarterly Approval Ratings")
+```
+
+## Research Design (IV1)
+- Monthly & quarterly aggregated Goldstein scores (-10 to +10)
+- TERRIER data
+- Directed dyad: Kor to Jpn, Kor to Chn, Kor to Prk
+```{r golplot, warning = FALSE, message = FALSE, echo = FALSE}
+
+kj_m_ts <- as.xts(doves_korm$kj_m, doves_korm$mdate)
+kc_m_ts <- as.xts(doves_korm$kc_m, doves_korm$mdate)
+kp_m_ts <- as.xts(doves_korm$kp_m, doves_korm$mdate)
+
+par(mfrow = c(2, 2))
+plot(as.zoo(kj_m_ts),
+     col = "steelblue",
+     plot.type = "single",
+     lwd = 1,
+     ylim=c(-8, 8),
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Monthly)",
+     main = "South Korea-Japan")
+
+plot(as.zoo(kc_m_ts),
+     col = "steelblue",
+     plot.type = "single",
+     lwd = 1,
+     ylim=c(-8, 8),
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Monthly)",
+     main = "South Korea-China")
+
+plot(as.zoo(kp_m_ts),
+     col = "steelblue",
+     plot.type = "single",
+     lwd = 1,
+     ylim=c(-8, 8),
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Monthly)",
+     main = "South Korea-North Korea")
+```
+
+## Research Design (IV2)
+- Quarterly
+```{r golplot2, warning = FALSE, message = FALSE, echo = FALSE}
+
+kj_q_ts <- as.xts(doves_korq$kj_q, doves_korq$qdate)
+kc_q_ts <- as.xts(doves_korq$kc_q, doves_korq$qdate)
+kp_q_ts <- as.xts(doves_korq$kp_q, doves_korq$qdate)
+
+
+par(mfrow = c(2, 2))
+
+plot(as.zoo(kj_q_ts),
+     col = "darkred",
+     lwd = 2,
+     ylim=c(-5, 5),
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Quarterly)",
+     main = "South Korea-Japan")
+
+plot(as.zoo(kc_q_ts),
+     col = "darkred",
+     lwd = 2,
+     ylim=c(-5, 5),
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Quarterly)",
+     main = "South Korea-China")
+
+plot(as.zoo(kp_q_ts),
+     col = "darkred",
+     lwd = 2,
+     ylim=c(-5, 5),
+     ylab = "Net Cooperation Scores",
+     xlab = "Date (Quarterly)",
+     main = "South Korea-North Korea")
+```
+
+## Research Design (Controls)
+
+- New President - binary (1/0)
+- Unemployment rates (Ostrom and Smith 1992) - first differenced
+
+## Endogeneity Problem 
+
+Impulse response functions (IRFs)
+
+
+
+## IRFs, Monthly 1
+
+```{r IRF1, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 4, fig.height = 4}
+unemp_m_ts <- ts(doves_korm$unemp_k, doves_korm$mdate)
+unemp_m_d_ts <- diff(unemp_m_ts, pad=0)
+newgov_ts <- ts(doves_korm$newgov, doves_korm$mdate)
+
+ADLdata <- ts.union(app_m, kj_m_ts, kc_m_ts, kp_m_ts, unemp_m_d_ts, newgov_ts)
+ADLdata2 <- ADLdata[-1,]
+varconst <- VARselect(ADLdata2[,1:5], lag.max=12,
+          type="const")
+
+M1var<-VAR(ADLdata2[,1:5], p=2, type="const") 
+par(mfrow = c(2, 1))
+plot(irf(M1var, impulse="app_m"))
+plot(irf(M1var, impulse="kj_m_ts"))
+
+```
+
+## IRFs, Monthly 2
+
+```{r IRF2, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 4, fig.height = 4}
+
+plot(irf(M1var, impulse="kc_m_ts"))
+plot(irf(M1var, impulse="kp_m_ts"))
+```
+
+## IRFs, Quarterly 1
+
+```{r IRF3, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 4, fig.height = 4}
+unemp_q_ts <- ts(doves_korq$unemp_k_q, doves_korq$qdate)
+unemp_q_d_ts <- diff(unemp_q_ts)
+newgov_q_ts <- ts(doves_korq$newgov, doves_korq$qdate)
+ADLdataq <- ts.union(app_q, kj_q_ts, kc_q_ts, kp_q_ts, unemp_q_d_ts, newgov_q_ts)
+ADLdataq2 <- ADLdataq[-1,]
+varconst <- VARselect(ADLdataq2[,-6], lag.max=12,
+                      type="const")
+M2qvar<-VAR(ADLdataq2[,-6], p=1,type="const") 
+
+plot(irf(M2qvar, impulse="app_q"))
+plot(irf(M2qvar, impulse="kj_q_ts"))
+```
+
+## IRFs, Quarterly 2
+
+```{r IRF4, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 4, fig.height = 4}
+plot(irf(M2qvar, impulse="kc_q_ts"))
+plot(irf(M2qvar, impulse="kp_q_ts"))
+```
+
+## ADL Models, Quarterly
+```{r ADLplot, warning = FALSE, message = FALSE, echo = FALSE}
+ADL40 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + kp_q_ts + unemp_q_d_ts +newgov_q_ts, data = ADLdataq)
+ADL41 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + kp_q_ts + L(unemp_q_d_ts) +newgov_q_ts, data = ADLdataq)
+ADL41b <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + L(kp_q_ts) + L(unemp_q_d_ts) +newgov_q_ts, data = ADLdataq)
+
+dwplot(list(ADL40, ADL41, ADL41b),
+       vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2)) %>% # plot line at zero _behind_ coefs
+    relabel_predictors(c("L(app_q)" = "Approval(lag1)",                       
+                         "L(app_q, 4)" = "Approval(lag4)", 
+                         kj_q_ts = "KJ", 
+                         kc_q_ts = "KC", 
+                         kp_q_ts = "KP", 
+                         unemp_q_d_ts = "Unemployment(d)", 
+                         "L(kp_q_ts)" = "KP(lag1)",
+                         "L(unemp_q_d_ts)" = "Unemployment(d,lag1)",
+                         newgov_q_ts = "New government")) +
+    theme_bw() + xlab("Coefficient Estimate") + ylab("") +
+    geom_vline(xintercept = 0, colour = "grey60", linetype = 2) +
+    ggtitle("Predicting Approval Ratings") +
+    theme(plot.title = element_text(face="bold"),
+          legend.position = c(0.78, 0.70),
+          legend.justification = c(0, 0), 
+          legend.background = element_rect(colour="grey80"),
+          legend.title = element_blank()) 
+
+```
+
+## ADL Models, Monthly
+```{r ADLplot2, warning = FALSE, message = FALSE, echo = FALSE}
+ADL120m <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + kp_m_ts + unemp_m_d_ts + newgov_ts, data = ADLdata)
+ADL121m <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + kp_m_ts + L(unemp_m_d_ts) + newgov_ts, data = ADLdata)
+ADL121mb <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + L(kp_m_ts) + L(unemp_m_d_ts) + newgov_ts, data = ADLdata)
+
+dwplot(list(ADL120m, ADL121m, ADL121mb),
+       vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2)) %>% # plot line at zero _behind_ coefs
+    relabel_predictors(c("L(app_m)" = "Approval(lag1)",                       
+                         "L(app_m, 12)" = "Approval(lag12)", 
+                         kj_m_ts = "KJ", 
+                         kc_m_ts = "KC", 
+                         kp_m_ts = "KP", 
+                         unemp_m_d_ts = "Unemployment(d)", 
+                         "L(kp_m_ts)" = "KP(lag1)",
+                         "L(unemp_m_d_ts)" = "Unemployment(d,lag1)",
+                         newgov_m_ts = "New government")) +
+    theme_bw() + xlab("Coefficient Estimate") + ylab("") +
+    geom_vline(xintercept = 0, colour = "grey60", linetype = 2) +
+    ggtitle("Predicting Approval Ratings") +
+    theme(plot.title = element_text(face="bold"),
+          legend.position = c(0.825, 0.84),
+          legend.justification = c(0, 0), 
+          legend.background = element_rect(colour="grey80"),
+          legend.title = element_blank()) 
+
+```
+## Appendix: Stationarity Tests Results
+
+- Augmented Dickey-Fuller Test
+- Phillips-Perron (PP) Test 
+- KPSS Test
+
+## Stationarity Tests Results (Monthly)
+```{r table, warning = FALSE, message = FALSE, echo = FALSE, width = 7, height = 5}
+adfapp    <- tidy(adf.test(doves_korm$app_nom))
+adfkj     <- tidy(adf.test(doves_korm$kj_m))
+adfkc     <- tidy(adf.test(doves_korm$kc_m))
+adfkp     <- tidy(adf.test(doves_korm$kp_m))
+adfunempd <- tidy(adf.test(diff(doves_korm$unemp_k)))
+
+ppapp     <- tidy(pp.test(doves_korm$app_nom))
+ppkj      <- tidy(pp.test(doves_korm$kj_m))
+ppkc      <- tidy(pp.test(doves_korm$kc_m))
+ppkp      <- tidy(pp.test(doves_korm$kp_m))
+ppunempd   <- tidy(pp.test(diff(doves_korm$unemp_k)))
+
+kpssapp   <- tidy(kpss.test(doves_korm$app_nom))
+kpsskj    <- tidy(kpss.test(doves_korm$kj_m))
+kpsskc    <- tidy(kpss.test(doves_korm$kc_m))
+kpsskp    <- tidy(kpss.test(doves_korm$kp_m))
+kpssunempd <- tidy(kpss.test(diff(doves_korm$unemp_k)))
+
+kpssapp$alternative   <-  "unit root"
+kpsskj$alternative  <-  "unit root"
+kpsskc$alternative  <-  "unit root"
+kpsskp$alternative  <-  "unit root"
+kpssunempd$alternative  <-  "unit root"
+
+unitroot  <- rbind(adfapp, ppapp, kpssapp, adfkj, ppkj, kpsskj, 
+                   adfkc, ppkc, kpsskc, adfkp, ppkp, kpsskp,
+                   adfunempd, ppunempd, kpssunempd)
+
+unitroot[, c(1, 2, 4, 5)] %>% 
+    kable("markdown") %>% 
+    kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+    group_rows("Approval", 1, 3) %>% 
+    group_rows("KJ", 4, 6) %>%
+    group_rows("KC", 7, 9) %>%
+    group_rows("KP", 10, 12) %>%
+    group_rows("Unemployment (d)", 13, 15) 
+
+```
+
+## Stationarity Tests Results (Quarterly)
+
+```{r table2, warning = FALSE, message = FALSE, echo = FALSE, width = 7, height = 5}
+adfapp    <- tidy(adf.test(doves_korq$approval))
+adfkj     <- tidy(adf.test(doves_korq$kj_q))
+adfkc     <- tidy(adf.test(doves_korq$kc_q))
+adfkp     <- tidy(adf.test(doves_korq$kp_q))
+adfunempd <- tidy(adf.test(diff(doves_korq$unemp_k_q)))
+
+ppapp     <- tidy(pp.test(doves_korq$approval))
+ppkj      <- tidy(pp.test(doves_korq$kj_q))
+ppkc      <- tidy(pp.test(doves_korq$kc_q))
+ppkp      <- tidy(pp.test(doves_korq$kp_q))
+ppunempd     <- tidy(pp.test(diff(doves_korq$unemp_k_q)))
+
+kpssapp   <- tidy(kpss.test(doves_korq$approval))
+kpsskj    <- tidy(kpss.test(doves_korq$kj_q))
+kpsskc    <- tidy(kpss.test(doves_korq$kc_q))
+kpsskp    <- tidy(kpss.test(doves_korq$kp_q))
+kpssunempd   <- tidy(kpss.test(diff(doves_korq$unemp_k_q)))
+
+
+kpssapp$alternative   <-  "unit root"
+kpsskj$alternative  <-  "unit root"
+kpsskc$alternative  <-  "unit root"
+kpsskp$alternative  <-  "unit root"
+kpssunempd$alternative  <-  "unit root"
+
+
+unitroot  <- rbind(adfapp, ppapp, kpssapp, adfkj, ppkj, kpsskj, 
+                   adfkc, ppkc, kpsskc, adfkp, ppkp, kpsskp,
+                   adfunempd, ppunempd, kpssunempd)
+
+unitroot[, c(1, 2, 4, 5)] %>% 
+    kable("markdown") %>% 
+    kable_styling(bootstrap_options = c("striped", "hover")) %>% 
+    group_rows("Approval", 1, 3) %>% 
+    group_rows("KJ", 4, 6) %>%
+    group_rows("KC", 7, 9) %>%
+    group_rows("KP", 10, 12) %>%
+    group_rows("Unemployment (d)", 13, 15)
+```
+## IRF (Unemployment, monthly)
+```{r IRF5, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 5, fig.height = 4}
+
+plot(irf(M1var, impulse="unemp_m_d_ts"))
+```
+
+## IRF (Unemployment, quarterly)
+```{r IRF6, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 5, fig.height = 4}
+
+plot(irf(M2qvar, impulse="unemp_q_d_ts"))
+```
+
+## Models (Monthly)
+```{r models, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 7, fig.height = 5}
+adl40 <- glance(ADL40)[c("r.squared","statistic","AIC","BIC")]
+adl41 <- glance(ADL41)[c("r.squared","statistic","AIC","BIC")]
+adl41b <- glance(ADL41b)[c("r.squared","statistic","AIC","BIC")]
+
+tabl <- rbind(adl40, as.numeric(adl41), as.numeric(adl41b))
+tabl %>%
+    kable("markdown") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Models (Quarterly)
+```{r models2, warning = FALSE, message = FALSE, echo = FALSE, fig.width = 7, fig.height = 5}
+adl120m <- glance(ADL120m)[c("r.squared","statistic","AIC","BIC")]
+adl121 <- glance(ADL121m)[c("r.squared","statistic","AIC","BIC")]
+adl121b <- glance(ADL121mb)[c("r.squared","statistic","AIC","BIC")]
+
+tabl2 <- rbind(adl120m, as.numeric(adl121), as.numeric(adl121b))
+
+tabl2 %>%
+    kable("markdown") %>%
+    kable_styling(bootstrap_options = c("striped", "hover"))
+
+```
+
