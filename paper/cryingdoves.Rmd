@@ -44,17 +44,19 @@ library(dynlm)
 
 # Introduction 
 
-Does cooperative behavior toward neighboring countries affect domestic politics? Actually, many scholars focus on the effect of conflictual event on domestic politics. For example, diversionary theory explains that leaders are more likely to use force against other countries when they have domestic turmoil such as low economic growth. The point is that when a state has external conflict the leaders can get a better position in the domestic politics by distracting the public’s attention from domestic issues toward external conflict. Similarly, the rally-’round-the-flag effect focuses on the public’s tendency to support its government when it has an external threat. For instance, in July 2017, the lowest Japanese cabinet’s approval rating was reported in the Yomiuri Shimbun, 36%.^[Yomiuri poll was conducted on 7-9 July. More details can be seen on the following link (http://www.yomiuri.co.jp/election/poll/20170710-OYT8T50024.html).] The reason for the rapid decrease in the approval rating is the Japanese prime minister, Shinzo Abe’s domestic scandals. Even though his efforts to end the scandals were not successful, his cabinet approval rating recovered the following month because of North Korea’s series of missile tests and China’s assertive attitude in the East China Sea. The rally effect is not limited to the severe threat. When the former Korean President, Lee Myung-bak, visited a disputed island between South Korea and Japan in 2012, his approval ratings increased about 9 percent [@Gallup2012]. 
+Does cooperative behavior toward neighboring rival states affect domestic politics? Many scholars focus on the relationship between conflictual event and domestic politics rather than the relationship between cooperative event and domestic politics. For example, diversionary theory explains that leaders are more likely to use force against other countries when they have domestic turmoil such as low economic growth. The point is that when a state has external conflict the leaders can get a better position in the domestic politics by distracting the public’s attention from domestic issues toward external conflict. Similarly, the rally-’round-the-flag effect focuses on the public’s tendency to support its government when it has an external threat [@Lai2005]. For instance, after the September 11 attacks, the US presidential approval ratings showed the highest point [@Gallup2001]. 
 
-  Likewise, each state has ongoing conflict issues. Japan and South Korea have a disputed island and Japan has a maritime dispute with China, and both Japan and South Korea feel threatened by North Korea. Of course, those ongoing conflicts influence domestic politics, particularly, the president or prime minister’s approval ratings. However, focusing on the conflicts is not enough to explain the effect of external relationships on domestic politics. Admittedly, the militarized disputes are so dramatic that the public is more likely to respond to them, the public also responds to cooperative events, such as signing an agreement or a summit. Furthermore, when the disputed countries are neighbors, discrete periods of conflicts cannot capture the characteristic of the interactions among them. For instance, despite the conflictual events, the disputants possibly meet each other to manage the conflict, or the disputants may have cooperative events in various areas.
+  Of course, as @Ostrom1992 point out, extraordinary political events such as international war and terrorist attacks can make a huge impact on domestic politics. However, interactions with other countries can occur not only in an extraordinary way but also in an ordinary way. Particularly, states share borders, thus they are neighbors, they are more likely to have more interactions in an ordinary way. For example, the South Korean-Japanese relations show that ordinary conflictual events over a disputed territory can affect their domestic politics. When the former Korean President, Lee Myung-bak, visited a disputed island between South Korea and Japan in 2012, his approval ratings increased about 9 percent [@Gallup2012]. 
 
-  In this regard, I focus on not just conflictual events but cooperative events and their effect on domestic politics of disputed neighboring countries. ln general, international issues are not salient enough to capture the public’s attention except for interstate wars which probably generate casualties. However, when a state has one or more than one neighboring state sharing ongoing disputed issues, the public is more likely to pay attention to the international issues. Moreover, citizens of the disputed countries are more likely to care about not just the ongoing conflicts but the cooperative behaviors from or toward the disputed state. For this reason, I claim that a relationship between neighboring states needs to be considered as a continuous one based on both conflictual and cooperative events. In order to capture the relationships among the neighboring states, I use a machine-coded event data set from the Temporally Extended, Regular, Reproducible International Event Records (TERRIER) Project. This event data set includes the Goldstein score, scaled from the most conflictual event (-10), to the most cooperative event (+10). Since the scale contains cooperative scores, it can better represent the ongoing relations between disputed countries. 
+  However, interactions between neighboring states include not just conflictual events but also cooperative events. Going back to the example of South Korea and Japan, although they have a disputed island, they are one of the largest trading partners to each other. For this reason, focusing on the conflicts is not enough to explain the effect of external relationships on domestic politics. Admittedly, the militarized disputes are so dramatic that the public is more likely to respond to them, the public also responds to cooperative events, such as signing an agreement or a summit. Furthermore, when the disputed countries are neighbors, discrete periods of conflicts cannot capture the characteristic of the interactions among them. For instance, despite the conflictual events, the disputants possibly meet each other to manage the conflict, or the disputants may have cooperative events in various areas.   
 
-  In this paper, I examine the effect of the external relations on approval ratings in Japan and South Korea respectively. I take these two cases, because firstly, both have ongoing conflicts with neighboring states such as territorial disputes and nuclear threats from North Korea, and secondly, the significant range of the presidential or cabinet approval ratings are available. The Japanese cabinet approval ratings are from February 1986 to July 2017 and the South Korean presidential approval ratings are from March 1993 to September 2016. The Japanese cabinet approval ratings are drawn from the Yomiuri Shimbun, which conducted polls monthly. And the South Korean presidential approval ratings are taken from the Research & Research. As for the external relations of Japan, I focus on three neighboring countries, China, South Korea, and North Korea. Indeed, China and South Korea similarly have disputed islands with Japan—the Senkaku/Diaoyu islands in the East China Sea and the Liancourt Rocks (referred to as Takeshima in Japan, and Dokdo in South Korea). North Korea has been a severe threat to Japan because of their missile launches and nuclear experiments and, on the other hand, North Korea’s abduction of Japanese citizens is still an ongoing problem between Japan and North Korea. As for South Korea, I focus on the relationships with two neighboring states, Japan and North Korea. South Korea has the disputed area with Japan as mentioned above, and both Koreas have had continuous conflictual events in the aftermath of the Korean War. 
+  In this regard, I focus on not only conflictual events but also cooperative events and their effect on domestic politics of neighboring countries. ln general, international issues are not salient enough to capture the public’s attention except for interstate wars which probably generate casualties. However, when a state has one or more than one neighboring state sharing ongoing disputed issues, the public is more likely to pay attention to the international issues. Moreover, citizens of the disputed countries are more likely to care about not just the ongoing conflicts but the cooperative behaviors from or toward the disputed state. For this reason, I claim that a relationship between neighboring states needs to be considered as a continuous one based on both conflictual and cooperative events. In order to capture the relationships among the neighboring states, I use an event data set from the Temporally Extended, Regular, Reproducible International Event Records (TERRIER) Project. This event data set includes the Goldstein score, scaled from the most conflictual event (-10), to the most cooperative event (+10). Since the scale contains cooperative scores, it can better represent the ongoing relations between disputed countries. 
 
-  The specific questions in this paper are as follows: do external relations with neighboring states affect approval ratings? Specifically, do cooperative behaviors matter? If the overall relations matter, then which neighboring states are more important in the change of approval ratings? In this paper, I contend that not just conflictual behaviors but also cooperative behaviors affect the approval ratings. In terms of the significance of the effect, I expect that relations with rival countries have more impact on the approval. Of course, rivalry can be defined in various ways, but in this paper, I focus on the citizens’ perception of rivalry. In this way, the rivalry is not necessarily reciprocal. Even though South Korean people think of Japan as their rival, Japanese people may not consider South Korea in the same way. I expect that Japanese citizens are more likely to respond to the relationship with China compared to those with South Korea and North Korea, and South Korean citizens are more likely to respond to the South Korean-Japanese relations rather than the two Korean relations. 
+  In this paper, I examine the effect of the external relations on approval ratings in South Korea using two different time spans, month and quarter. I focus on South Korea, because firstly, it has ongoing conflicts with neighboring states such as territorial disputes and nuclear threats from North Korea, and secondly, the significant range of the presidential approval ratings are available. Both monthly and quarterly South Korean presidential approval ratings are available from March 1993. The monthly approval ratings are drawn from the Research & Research and the quarterly series are from Gallup Korea. As for external relations of South Korea, I focus on the relationships with three neighboring states—Japan, China and North Korea. Indeed, South Korea has a disputed area with Japan as mentioned above, South Korea and China have had a maritime issue related to Chinese fishermen, and both Koreas have had continuous conflictual events in the aftermath of the Korean War. Most importantly, the three relationships are selected because they have been categorized as rivalries at least once for the period from 1993. 
 
-  This paper proceeds as follows. First, I present arguments in terms of the relationship between external relations and approval focusing on the diversionary theory and the rally effect. Second, I argue that the overall relations with neighboring countries affect the approval, particularly, when the counterpart is considered a rival. Before I suggest a model, I examine the direction of the relationship among the variables since there could be an endogeneity problem. Thus, to examine the direction of the relationship I conduct the Granger Causality test using a vector autoregression (VAR) model. After checking the direction of the effect, I present a single equation model focusing on the approval, conduct a linear regression model including lagged independent and dependent variables, and discuss the results.
+  The specific questions in this paper are as follows: do external relations with neighboring rival states affect approval ratings? Specifically, do cooperative behaviors matter? If the overall relations matter, then which neighboring states are more important in the change of approval ratings? In this paper, I contend that not just conflictual behaviors but also cooperative behaviors affect the approval ratings. In terms of the significance of the effect, I expect that relations with rival countries have more impact on the approval ratings. Of course, rivalry can be defined in various ways, but in this paper, I focus on the citizens’ perception of rivalry. In this way, the rivalry is not necessarily reciprocal. Even though South Korean people think of Japan as their rival, Japanese people may not consider South Korea in the same way. I expect that South Korean citizens are more likely to respond to the South Korean-Japanese relations rather than the two Korean relations or the South Korean-Chinese relations. 
+
+  This paper proceeds as follows. First, I present arguments in terms of the relationship between external relations and approval focusing on the diversionary theory and the rally effect. Second, I argue that the overall relations with neighboring countries affect the approval, particularly, when the counterpart is considered a rival. Before I suggest a model, I examine the direction of the relationship among the variables since there could be an endogeneity problem. Thus, to examine the direction of the relationship I plot the impulse response functions (IRFs) using a vector autoregression (VAR) model. After checking the direction of the effect, I present a single autoregressive distributed lag model (ADL) including lagged independent and dependent variables for both time spans and discuss the results.
       
 # The Effect of Conflict and Cooperation on Domestic Politics 
 
@@ -66,7 +68,7 @@ There are many studies about public approval, specifically, the factors affectin
 
 Many scholars focus on conflictual events to explain the relationships between international relations and domestic politics. First, diversionary theory points out the effect of lower popularity or lower approval on the use of force. According to the diversionary theory, when leaders suffer from domestic turmoil, they are more likely to use force toward other countries to distract the public’s attention from domestic issues and toward external conflict. For instance, @Oneal2006 explain whether economic turmoil such as low economic growth affects the probability of interstate conflict. On the other hand, some scholars focus on the effect of external conflict on approval ratings, especially the rally-round-the-flag effect. When a country is involved in an international crisis, the public is more likely to support the government, thus, the approval ratings will increase.
 
-  In fact, the directions between external conflict and approval are different in the diversionary theory and the rally effect. For the diversionary theory, the direction is from approval to external conflict whereas the direction in the rally effect is from external conflict to approval. Even though they have different focuses, they can be combined depending on the initiator of the crisis. First, suppose that State A suffers from domestic turmoil and lower approval. If a leader of State A initiates an external crisis toward State B, and that leads to an increase of the leader’s approval, then the directions of external conflict and approval can be described as follows: Approval (A) $\rightarrow$ External Conflict (A to B) $\rightarrow$ Approval (A). On the other hand, regardless of the approval in State A, State B can initiate the conflict with State A, and which can affect A’s approval as such: External Conflict (B to A) $\rightarrow$ Approval (A). The probable endogeneity problem will be discussed at the next part.
+  In fact, the directions between external conflict and approval are different in the diversionary theory and the rally effect. For the diversionary theory, the direction is from approval to external conflict whereas the direction in the rally effect is from external conflict to approval. Even though they have different focuses, they can be combined depending on the initiator of the crisis. First, suppose that State A suffers from domestic turmoil and lower approval. If a leader of State A initiates an external crisis toward State B, and that leads to an increase of the leader’s approval, then the directions of external conflict and approval can be described as follows: Approval (A) $\rightarrow$ External Conflict (A to B) $\rightarrow$ Approval (A). On the other hand, regardless of the approval in State A, State B can initiate the conflict with State A, and which can affect A’s approval as such: External Conflict (B to A) $\rightarrow$ Approval (A). The probable endogeneity problem will be discussed in the next part.
   
 ## In the Context of Rivalry
 
@@ -80,21 +82,18 @@ Regarding the rally effect, some scholars suggest more specific conditions which
 
 # Research Design
 
-Since I focus on two cases, Japan and South Korea, I set a model for each case. The first dependent variable is Japanese cabinet approval ratings which are measured by the Yomiuri Shimbun survey. The Yomiuri Shimbun has conducted this monthly survey, and the survey question is: Do you support the current cabinet or not. The results of the poll can be found at the Yomiuri Shimbun database.^[https://database.yomiuri.co.jp/rekishikan/] I use the cabinet approval ratings of the regular survey from February 1987 to July 2017. The total time points are 378 months, and 16 points are missing. Half of the missing values are generated because of the transition of the cabinet. In the last month of the cabinet, and just before the election, the question of cabinet support was not included in the survey. Since time series analysis is sensitive to the missing values, I use the previous approval rating for the missing value.
+Since I focus on the monthly and quarterly South Korean presidential approval ratings, I set a model for each time span. The first dependent variable is the monthly South Korean presidential approval ratings, which are drawn from the Research & Research. The range of the monthly presidential approval ratings are from March 1993 to December 2014, thus the total number of observations is 262.^[More details can be found on the Research & Research homepage (http://w3.randr.co.kr/info/?viewpage=6&viewNo=2&pn=1&ss=&bn=0).] The second dependent variable is the quarterly presidential approval ratings. This quarterly series of approval ratings are drawn from Gallup Korea and the total number of observations is 88. Since time series models are sensitive to the missing values, it is crucial to deal with them. While there is no missing value in the quarterly presidential approval ratings, monthly presidential approval ratings have four missing values from November 1997 to February 1998. The 4 continuing missing values were probably generated because of the Korean financial crisis at that time. Because of the financial crisis, the poll reported the lowest presidential approval ratings in October 1997. When crosschecking the quarterly approval ratings from the Gallup Korea survey, the South Korean president suffered the lowest approval ratings for the four months, and in March 1998, the approval rating went up because the new president was inaugurated. For that reason, I use the approval rating in October 1997, 14%, for the 4 missing values. 
 
 
-  As for the South Korean presidential approval ratings, they are drawn from the Research & Research. This is a quarterly approval rating and the range of the approval ratings are from 1993 to 2014, thus the total number of observations is 88.
-  
-
-```{r plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot}South Korean Approval Ratings"}
-setwd("C:/Users/bomim/Documents/cryingdoves")
-doves_korm <- read.csv("data/doves_korm_nomiss.csv")
-doves_korq <- read.csv("data/doves_korq.csv")
+```{r plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot1}South Korean Approval Ratings"}
+doves_korm <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korm_nomiss.csv")
+doves_korq <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korq.csv")
 
 doves_korm$mdate = as.yearmon(paste(doves_korm$year, " ", doves_korm$month), format = "%Y %m")
 app_m <- as.xts(doves_korm$app_nom, order.by=doves_korm$mdate)
 doves_korq$qdate = as.yearqtr(doves_korq$quarterly, format = "%Yq%q")
 app_q <- as.xts(doves_korq$approval, order.by=doves_korq$qdate)
+par(mfrow = c(1, 2))
 plot(as.zoo(app_m),
      plot.type = "single", 
      col = "steelblue",
@@ -114,10 +113,9 @@ plot(as.zoo(app_q),
      main = "Quarterly Approval Ratings")
 ```
 
-  The core independent variables are net cooperation scores of the dyads. The scores of net cooperation are taken from the TERRIER dataset. The TERRIER dataset is one of the machine-coded datasets where news reports of events are coded using the dyadic Conflict and Mediation Event Observations Event and Actor Codebook (CAMEO) format. For instance, when one piece of news is reported, then the event is coded following the CAMEO code, and Actor 1 and Actor 2 are specified where Actor 1 is a sender and Actor 2 is a target. Additionally, TERRIER includes the Goldstein score, thus each event is scaled from the most conflictual event (-10) to the most cooperative event (+10). This Goldstein scale was created and introduced by Goldstein (1992), and using the scale, each event can be weighted differently. For instance, when the news is reported, the event is coded following the CAMEO codes, and each CAMEO code is assigned the Goldstein score, thus each event can be weighted in the spectrum of cooperation and conflict. I use the mean of the weighted events during the month as the net cooperation score. This net cooperation score is used in @Lebo2003 and @Rajmaira1997 as well. Also, I use directed net cooperation scores considering all events related to the dyad. Thus, for the Japanese case, I include 3 dyads, Japan-China, Japan-South Korea, and Japan-North Korea. For the Korean case, I consider 3 dyads, South Korea-Japan, South Korea-China, and South Korea-North Korea. Below are the net cooperation scores of the dyads from the given period.
+The core independent variables are net cooperation scores of the dyads. The scores of net cooperation are taken from the Temporally Extended, Regular, Reproducible International Event Records (TERRIER) Project. The TERRIER dataset is one of the machine-coded datasets where news reports of events are coded using the dyadic Conflict and Mediation Event Observations Event and Actor Codebook (CAMEO) format. For instance, when one piece of news is reported, then the event is coded following the CAMEO code, and Actor 1 and Actor 2 are specified where Actor 1 is a sender and Actor 2 is a target. Additionally, the TERRIER data set includes the Goldstein score, thus each event is scaled from the most conflictual event (-10) to the most cooperative event (+10). This Goldstein scale was created and introduced by Goldstein (1992), and using the scale, each event can be weighted differently. For instance, when the news is reported, the event is coded following the CAMEO codes, and each CAMEO code is assigned the Goldstein score, thus each event can be weighted in the spectrum of cooperation and conflict. I use the mean of the weighted events during the month and quarter as the net cooperation score. This net cooperation score is used in @Lebo2003 and @Rajmaira1997 as well. Also, I use directed net cooperation scores considering all events related to the dyad. Thus, I consider 3 directed dyads, South Korea to Japan (SK2JP), South Korea to North Korea (SK2NK), and South Korea to China (SK2CH). Below are the monthly and quarterly net cooperation scores of the dyads from the given period. 
 
-```{r plot2, fig.width = 7, fig.height = 6, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}Net Cooperation Scores"}
-
+```{r plot2, fig.width = 7, fig.height = 6, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot}Net Cooperation Scores"}
 kj_m_ts <- as.xts(doves_korm$kj_m, doves_korm$mdate)
 kc_m_ts <- as.xts(doves_korm$kc_m, doves_korm$mdate)
 kp_m_ts <- as.xts(doves_korm$kp_m, doves_korm$mdate)
@@ -149,7 +147,10 @@ plot(as.zoo(kp_m_ts),
      ylab = "Net Cooperation Scores",
      xlab = "Date (Monthly)",
      main = "South Korea-North Korea")
+```
 
+
+```{r plot3, fig.width = 7, fig.height = 6, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot3}Net Cooperation Scores"}
 kj_q_ts <- as.xts(doves_korq$kj_q, doves_korq$qdate)
 kc_q_ts <- as.xts(doves_korq$kc_q, doves_korq$qdate)
 kp_q_ts <- as.xts(doves_korq$kp_q, doves_korq$qdate)
@@ -181,13 +182,11 @@ plot(as.zoo(kp_q_ts),
      xlab = "Date (Quarterly)",
      main = "South Korea-North Korea")
 
-```  
+```
 
-As for the rivalry relationship, firstly, I consider the five levels of a relationship from @Goertz2016. More specifically, they develop five levels of a peace scale—severe rivalry, lesser rivalry, negative peace, warm peace, and security communities considering the existence of conflict, war plans, main issues of conflict, communication, diplomacy, and agreement. In their data set, the relationship between Japan and North Korea was a lesser rivalry from 1986 to 1994 but it changed to a severe rivalry in 1994. The relationship between Japan and South Korea is a lesser rivalry in the given period, and that of Japan and China is also a lesser rivalry during the period. On the other hand, the relationship between South Korea and North Korea is a severe rivalry since both states were created. Thus, both Japan and South Korea have a severe rivalry relationship with North Korea and other dyads are in the lesser rivalry level according to the peace scale data. 
+  The three countries—Japan, North Korea, and China—are chosen for the independent variables because they were classified as severe or lesser rivalry at least once during the given period [@Goertz2016]. @Goertz2016 develop five levels of a peace scale—severe rivalry, lesser rivalry, negative peace, warm peace, and security communities considering the existence of conflict, war plans, main issues of conflict, communication, diplomacy, and agreement. According to their work, the relationship between South Korea and Japan was a lesser rivalry until 2006. In terms of the South Korean-Chinese relations, their severe rivalry ended in 1994 but unlike other dyads, their relationship was not specified until 2000 in Goertz, Diehl, and Balas’s Peace data. On the other hand, the relationship between South Korea and North Korea is a severe rivalry since both states were created [@Goertz2016]. 
 
-  However, it is difficult to expect that North Korea is perceived as a rival to both states. As @Thompson2002 points out, the rivalry relationship is not just related to the number of militarized disputes but to the threat perception and hostility. Even though he focuses on the decision maker’s perception of rivalry, the change of public approval is closely related to the public’s threat perception. According to the Yomiuri and Gallup Joint Opinion Survey data, the respondents who answer that China is a military threat to Japan have increased over time (54.5 % in 2006, 79% in 2010, and 83% in 2014). On the other hand, the percentages of the respondents answering that North Korea is a military threat to Japan have maintained over time (79.6% in 2006, 84% in 2010, and 71% in 2014). Contrary to that, South Korea has obtained the lower percentages during the given period (24.4% in 2006, 18% in 2010, and 41% in 2014). Although the peace scale data show the different levels of the relationship for the Japan-China, and the Japan-North Korea dyads, the threat perceptions of the Japanese citizens toward China and North Korea are not significantly different. On the other hand, the survey results conducted by Korea Gallup show that 31.3% of the respondents answer that Japan is a military threat to South Korea in 2001. This value is slightly higher than the percentage of North Korea (29.7%). Another survey carried out by Korea Institute for Defense Analysis reports that 23.6% of the respondents say that Japan is a military threat to South Korea, which is the second highest rank. In the survey, China records the first rank by 37.7%, and North Korea is the 3rd rank by 20.7%. Since the Japanese citizens consider both China and North Korea as military threats, and the South Korean citizens perceive both North Korea and Japan as military threats, those threat perceptions should be considered for the understanding of the rivalry relationship. 
-  
-  For the control variables, I take the @Ostrom1992 model, thus I include unemployment rate and inflation. Both data are taken from the Organization for Economic Co-operation and Development (OECD) database. The unemployment rate is the percentage of the unemployed people among the labor forces. I use the consumer price index (CPI) for inflation.^[More details can be found on the OECD database (https://data.oecd.org/unemp/unemployment-rate.htm; https://data.oecd.org/price/inflation-cpi.htm).] Adding to those variables, I include a new cabinet or new president variable for each model, coded 1 for a new cabinet/president and 0 otherwise. Since there is a tendency for a new cabinet/president to get more support in the first month, thus I consider the effect as a control variable. 
+  For the control variables, I follow the @Ostrom1992 model, thus I include unemployment rate. The series of unemployment rate is taken from the Organization for Economic Co-operation and Development (OECD) database. The unemployment rate is the percentage of the unemployed people among the labor forces.^[More details can be found on the OECD database (https://data.oecd.org/unemp/unemployment-rate.htm).] Since I test the stationarity of the series of unemployment rates from March 1993 to December 2014, the null hypothesis of unit root is not rejected, I take the first difference for the unemployment rate. Adding to those variables, I include a new president variable for each model, coded 1 for a new president and 0 otherwise for the first month or quarter.   
   
 # Direction of the Relationship between External Relations and Approval
 
@@ -195,95 +194,82 @@ As stated above, there could be an endogeneity problem within the variables. Ext
 
 $$Approval_{t} = \sum_{i=1}^{p} \alpha_{i}Approval_{t-1} + \sum_{j=0}^{q}\sum_{k=1}^{r} \beta_{jk} Net Cooperation_{t-j} + \epsilon_{1t}$$
 $$NetCooperation_{t} = \sum_{l=0}^{s}\sum_{m=1}^{t} \delta_{lm} Net Cooperation_{t-1} + \sum_{n=0}^{u} \gamma_{n} Approval_{t-n} + \epsilon_{2t}$$
-Thus, in order to figure out the direction of the relationship I conduct the Granger Causality test using a vector autoregression (VAR) model.
+In order to figure out the direction of the relationship I plot the impulse response functions (IRFs) using a vector autoregression (VAR) model. According to @Brandt2006, the VAR model is a “system of unrestricted reduced form equations”. For n number of variables, each variable is regressed by its p lagged values and p lagged values of other n-1 variables. By employing the multi-equation VAR model, we can describe the dynamics of n variables in a form of IRFs [@Brandt2006]. Based on the Akaike's information criterion (AIC) and the Bayesian information criterion (BIC) values, the monthly VAR model takes 2 lags and the quarterly model takes 1 lag for variables. 
 
-  In the first model of the Japanese case, the result of Granger Causality test shows that the direction of the relationship flows from Japan-China relations to approval ratings. The Granger causality test is an equation where y is regressed on a lagged value or values of y and a lagged value or values of x. The null hypothesis is that x does not “Granger cause” y [@Box-Steffensmeier2009].
 
-```{r VAR, fig.width = 4, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot2}IRFs"}
-
+```{r VAR, fig.width = 7, fig.height = 7, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot4}Impulse Response Functions (Monthly)"}
 unemp_m_ts <- ts(doves_korm$unemp_k, doves_korm$mdate)
 unemp_m_d_ts <- diff(unemp_m_ts, pad=0)
 newgov_ts <- ts(doves_korm$newgov, doves_korm$mdate)
 
 ADLdata <- ts.union(app_m, kj_m_ts, kc_m_ts, kp_m_ts, unemp_m_d_ts, newgov_ts)
+
 ADLdata2 <- ADLdata[-1,]
+colnames(ADLdata2) <- c('APP', 'SK2JP', "SK2CH", "SK2NK", "Unemp", "NewGov")
 varconst <- VARselect(ADLdata2[,1:5], lag.max=12,
           type="const")
 
 M1var<-VAR(ADLdata2[,1:5], p=2, type="const") 
-par(mfrow = c(2, 1))
-plot(irf(M1var, impulse="app_m"))
-plot(irf(M1var, impulse="kj_m_ts"))
-plot(irf(M1var, impulse="kc_m_ts"))
-plot(irf(M1var, impulse="kp_m_ts"))
+IRF1 <- irf(M1var,n.ahead = 12, ci = .9, cumulative = FALSE)
+par(mfcol=c(5,5),cex=0.4)
+plot(IRF1, plot.type="single", main="", sub="")
+```
 
+  Impulse response analysis shows the responses of the variables when selected variables are shocked [@Brandt2007; @Brandt2009; @Webb2017]. In the Figures below, the x-axes show the following time periods after the shock, and the y-axes show the responses of the variable. Specifically, the first column shows the responses of variables when the monthly approval ratings variable is shocked. SK2JP is shocked in the second column, SK2CH is in the third, SK2NK is in the fourth, and the first differenced unemployment rate is in the fifth column. Thus, the graph in the first row and second column presents the response of approval ratings to a shock in SK2JP. When focusing on the graphs in the first column, all the net cooperation scores do not have responses to the shock in the approval ratings, which means the direction from the approval ratings to the net cooperation scores is not valid. On the other hand, a positive shock in the net cooperation scores leads to positive or negative response in the monthly presidential approval ratings. 
+  
+```{r VAR2, fig.width = 7, fig.height = 7, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot5}Impulse Response Functions (Quarterly)"}
 unemp_q_ts <- ts(doves_korq$unemp_k_q, doves_korq$qdate)
 unemp_q_d_ts <- diff(unemp_q_ts)
 newgov_q_ts <- ts(doves_korq$newgov, doves_korq$qdate)
 ADLdataq <- ts.union(app_q, kj_q_ts, kc_q_ts, kp_q_ts, unemp_q_d_ts, newgov_q_ts)
+
 ADLdataq2 <- ADLdataq[-1,]
+colnames(ADLdataq2) <- c('APP', 'SK2JP', "SK2CH", "SK2NK", "Unemp", "NewGov")
 varconst <- VARselect(ADLdataq2[,-6], lag.max=12,
                       type="const")
 M2qvar<-VAR(ADLdataq2[,-6], p=1,type="const") 
-
-plot(irf(M2qvar, impulse="app_q"))
-plot(irf(M2qvar, impulse="kj_q_ts"))
-plot(irf(M2qvar, impulse="kc_q_ts"))
-plot(irf(M2qvar, impulse="kp_q_ts"))
-```
-
-## ADL Models, Quarterly
-```{r ADLplot, fig.width = 7, fig.height = 6, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot5}Net Cooperation Scores"}
-ADL40 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + kp_q_ts + unemp_q_d_ts +newgov_q_ts, data = ADLdataq)
-ADL41 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + kp_q_ts + L(unemp_q_d_ts) +newgov_q_ts, data = ADLdataq)
-ADL41b <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + L(kp_q_ts) + L(unemp_q_d_ts) +newgov_q_ts, data = ADLdataq)
-
-dwplot(list(ADL40, ADL41, ADL41b),
-       vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2)) %>% # plot line at zero _behind_ coefs
-    relabel_predictors(c("L(app_q)" = "Approval(lag1)",                       
-                         "L(app_q, 4)" = "Approval(lag4)", 
-                         kj_q_ts = "KJ", 
-                         kc_q_ts = "KC", 
-                         kp_q_ts = "KP", 
-                         "L(kp_q_ts)" = "KP(lag1)",
-                         unemp_q_d_ts = "Unemployment(d)", 
-                         "L(unemp_q_d_ts)" = "Unemployment(d,lag1)",
-                         newgov_q_ts = "New government")) +
-    theme_bw() + xlab("Coefficient Estimate") + ylab("") +
-    geom_vline(xintercept = 0, colour = "grey60", linetype = 2) +
-    ggtitle("Predicting Approval Ratings") +
-    theme(plot.title = element_text(face="bold"),
-          legend.position = c(0.78, 0.70),
-          legend.justification = c(0, 0), 
-          legend.background = element_rect(colour="grey80"),
-          legend.title = element_blank()) 
+IRF2 <- irf(M2qvar,n.ahead = 12, ci = .9, cumulative = FALSE)
+par(mfcol=c(5,5),cex=0.4)
+plot(IRF2, plot.type="single", main="", sub="")
 
 ```
 
-```{r fig.width = 7, fig.height = 6, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot6}Net Cooperation Scores"}
-ADL120m <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + kp_m_ts + unemp_m_d_ts + newgov_ts, data = ADLdata)
-ADL121m <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + kp_m_ts + L(unemp_m_d_ts) + newgov_ts, data = ADLdata)
-ADL121mb <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + L(kp_m_ts) + L(unemp_m_d_ts) + newgov_ts, data = ADLdata)
+  Similarly, a shock in the net cooperation scores influence the quarterly approval ratings. In the first column of the graphs, the presidential approval ratings variable is shocked. For the second, third, and fourth columns, SK2JP, SK2CH, and SK2NK are shocked respectively. Lastly, in the fifth column, the first differenced unemployment rate is shocked. As shown in the first column, the net cooperation scores of three dyads do not respond to the shock in the quarterly approval ratings. On the other hand, the presidential approval ratings variable responds to the shock in the net cooperation scores. Based on the existence of responses in IRFs, I set a single equation where the dependent variable is the approval rating for each time span and the independent variables are the lagged values of the net cooperation scores.
+  
+# Results
 
-dwplot(list(ADL120m, ADL121m, ADL121mb),
-       vline = geom_vline(xintercept = 0, colour = "grey60", linetype = 2)) %>% # plot line at zero _behind_ coefs
-    relabel_predictors(c("L(app_m)" = "Approval(lag1)",                       
-                         "L(app_m, 12)" = "Approval(lag12)", 
-                         kj_m_ts = "KJ", 
-                         kc_m_ts = "KC", 
-                         kp_m_ts = "KP", 
-                         "L(kp_m_ts)" = "KP(lag1)",
-                         unemp_m_d_ts = "Unemployment(d)", 
-                         "L(unemp_m_d_ts)" = "Unemployment(d,lag1)",
-                         newgov_m_ts = "New government")) +
-    theme_bw() + xlab("Coefficient Estimate") + ylab("") +
-    geom_vline(xintercept = 0, colour = "grey60", linetype = 2) +
-    ggtitle("Predicting Approval Ratings") +
-    theme(plot.title = element_text(face="bold"),
-          legend.position = c(0.825, 0.84),
-          legend.justification = c(0, 0), 
-          legend.background = element_rect(colour="grey80"),
-          legend.title = element_blank()) 
+  In order to figure out proper lag lengths for the dependent variable, I conduct several models with various combination of lagged values of the dependent variables and compare the AIC and BIC values. Based on the AIC and BIC values, I include the first and fourth lag of the quarterly approval ratings and the first and twelfth lag of the monthly presidential approval ratings in the models. Although the fourth lag of the quarterly approval ratings and the twelfth lag of the monthly approval ratings are not statistically significant as shown in Table 1 and Table 2, models including the fourth lag and the twelfth lag of the dependent variable as well as the first lag have lower values in both AIC and BIC. Since the effects of the independent variables at time point t cannot be examined by employing the VAR models, contemporaneous values of the independent variables are also included in the model. In order to find a better model fit, I try different combinations of the contemporaneous and lagged values of the independent and control and, thus, add the first lag of the first differenced unemployment rate and the first lag of SK2NK to the models.
+  
+  As shown in Table 1, the contemporaneous value of SK2JP has a positive impact on the quarterly approval ratings. It is significant at p<.05 level in Model 2 and at p<.1 level in Model 1 and 3. The coefficient of SK2CH is negative in all three models but it is only significant at p<.1 level in Model 1. On the other hand, SK2NK and unemployment rate are not significant at time point t and t-1 as well. When comparing the AIC and BIC values of the models, Model 1 shows the best fit. Overall, the results show that the cooperative behavior toward Japan has a contemporaneous positive impact on the South Korean quarterly presidential approval ratings, and the cooperative behavior toward China has a contemporaneous negative impact on the approval ratings.  
+
+```{r, results='asis', echo = FALSE, warning = FALSE, message = FALSE}
+Model1 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + kp_q_ts + unemp_q_d_ts +newgov_q_ts, data = ADLdataq)
+Model2 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + kp_q_ts + L(unemp_q_d_ts) +newgov_q_ts, data = ADLdataq)
+Model3 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + L(kp_q_ts) + L(unemp_q_d_ts) +newgov_q_ts, data = ADLdataq)
+
+stargazer(Model1, Model2, Model3, type = "latex", object.names = TRUE, model.numbers = FALSE, keep.stat=c("aic", "bic", "rsq", "n"),
+          title = "The Effect of External Relations on the Quarterly Approval Ratings",
+          covariate.labels = c("Approval(t-1)", "Approval(t-4)",
+                               "SK2JP", "SK2CH", "SK2NK",
+                               "Unemployment", "SK2NK(t-1)",
+                               "Unemployment(t-1)", "New Government"),
+          dep.var.labels   = "Approval Ratings (Quarterly)")
 
 ```
 
+
+```{r, results='asis', echo = FALSE, warning = FALSE, message = FALSE}
+Model4 <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + kp_m_ts + unemp_m_d_ts + newgov_ts, data = ADLdata)
+Model5 <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + kp_m_ts + L(unemp_m_d_ts) + newgov_ts, data = ADLdata)
+Model6 <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + L(kp_m_ts) + L(unemp_m_d_ts) + newgov_ts, data = ADLdata)
+
+stargazer(Model4, Model5, Model6, type = "latex", object.names = TRUE, model.numbers = FALSE, keep.stat=c("aic", "bic", "rsq", "n"),
+          title = "The Effect of External Relations on the Monthlyly Approval Ratings",
+          covariate.labels = c("Approval(t-1)", "Approval(t-12)",
+                               "SK2JP", "SK2CH", "SK2NK",
+                               "Unemployment", "SK2NK(t-1)",
+                               "Unemployment(t-1)", "New Government"),
+          dep.var.labels   = "Approval Ratings (Monthly)")
+
+```
+# Conclusion
