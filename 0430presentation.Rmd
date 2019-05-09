@@ -180,7 +180,9 @@ unemp_m_d_ts <- diff(unemp_m_ts, pad=0)
 newgov_ts <- ts(doves_korm$newgov, doves_korm$mdate)
 
 ADLdata <- ts.union(app_m, kj_m_ts, kc_m_ts, kp_m_ts, unemp_m_d_ts, newgov_ts)
+
 ADLdata2 <- ADLdata[-1,]
+colnames(ADLdata2) <- c('APP', 'SK2JP', "SK2CH", "SK2NK", "Unemp", "NewGov")
 varconst <- VARselect(ADLdata2[,1:5], lag.max=12,
           type="const")
 
@@ -389,6 +391,7 @@ tabl <- rbind(adl40, as.numeric(adl41), as.numeric(adl41b))
 tabl %>%
     kable("markdown") %>%
     kable_styling(bootstrap_options = c("striped", "hover"))
+stargazer(ADL40, ADL41, type = "html")
 ```
 
 ## Models (Quarterly)
