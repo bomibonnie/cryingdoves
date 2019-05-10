@@ -115,12 +115,12 @@ plot(as.zoo(app_q),
 
 The core independent variables are net cooperation scores of the dyads. The scores of net cooperation are taken from the Temporally Extended, Regular, Reproducible International Event Records (TERRIER) Project. The TERRIER dataset is one of the machine-coded datasets where news reports of events are coded using the dyadic Conflict and Mediation Event Observations Event and Actor Codebook (CAMEO) format. For instance, when one piece of news is reported, then the event is coded following the CAMEO code, and Actor 1 and Actor 2 are specified where Actor 1 is a sender and Actor 2 is a target. Additionally, the TERRIER data set includes the Goldstein score, thus each event is scaled from the most conflictual event (-10) to the most cooperative event (+10). This Goldstein scale was created and introduced by Goldstein (1992), and using the scale, each event can be weighted differently. For instance, when the news is reported, the event is coded following the CAMEO codes, and each CAMEO code is assigned the Goldstein score, thus each event can be weighted in the spectrum of cooperation and conflict. I use the mean of the weighted events during the month and quarter as the net cooperation score. This net cooperation score is used in @Lebo2003 and @Rajmaira1997 as well. Also, I use directed net cooperation scores considering all events related to the dyad. Thus, I consider 3 directed dyads, South Korea to Japan (SK2JP), South Korea to North Korea (SK2NK), and South Korea to China (SK2CH). Below are the monthly and quarterly net cooperation scores of the dyads from the given period. 
 
-```{r plot2, fig.width = 7, fig.height = 6, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot}Net Cooperation Scores"}
+```{r plot2, fig.width = 5, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot}Net Cooperation Scores"}
 kj_m_ts <- as.xts(doves_korm$kj_m, doves_korm$mdate)
 kc_m_ts <- as.xts(doves_korm$kc_m, doves_korm$mdate)
 kp_m_ts <- as.xts(doves_korm$kp_m, doves_korm$mdate)
 
-par(mfrow = c(2, 2))
+par(mfrow = c(2, 2),cex=0.5)
 plot(as.zoo(kj_m_ts),
      col = "steelblue",
      plot.type = "single",
@@ -150,13 +150,13 @@ plot(as.zoo(kp_m_ts),
 ```
 
 
-```{r plot3, fig.width = 7, fig.height = 6, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot3}Net Cooperation Scores"}
+```{r plot3, fig.width = 5, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot3}Net Cooperation Scores"}
 kj_q_ts <- as.xts(doves_korq$kj_q, doves_korq$qdate)
 kc_q_ts <- as.xts(doves_korq$kc_q, doves_korq$qdate)
 kp_q_ts <- as.xts(doves_korq$kp_q, doves_korq$qdate)
 
 
-par(mfrow = c(2, 2))
+par(mfrow = c(2, 2),cex=0.5)
 
 plot(as.zoo(kj_q_ts),
      col = "darkred",
@@ -215,7 +215,7 @@ par(mfcol=c(5,5),cex=0.4)
 plot(IRF1, plot.type="single", main="", sub="")
 ```
 
-  Impulse response analysis shows the responses of the variables when selected variables are shocked [@Brandt2007; @Brandt2009; @Webb2017]. In the Figures below, the x-axes show the following time periods after the shock, and the y-axes show the responses of the variable. Specifically, the first column shows the responses of variables when the monthly approval ratings variable is shocked. SK2JP is shocked in the second column, SK2CH is in the third, SK2NK is in the fourth, and the first differenced unemployment rate is in the fifth column. Thus, the graph in the first row and second column presents the response of approval ratings to a shock in SK2JP. When focusing on the graphs in the first column, all the net cooperation scores do not have responses to the shock in the approval ratings, which means the direction from the approval ratings to the net cooperation scores is not valid. On the other hand, a positive shock in the net cooperation scores leads to positive or negative response in the monthly presidential approval ratings. 
+  Impulse response analysis shows the responses of the variables when selected variables are shocked [@Brandt2006; @Brandt2008; @Webb2017]. In the Figure 4 and 5, the x-axes show the following time periods after the shock, and the y-axes show the responses of the variable. Specifically, the first column shows the responses of variables when the monthly approval ratings variable is shocked. SK2JP is shocked in the second column, SK2CH is in the third, SK2NK is in the fourth, and the first differenced unemployment rate is in the fifth column. Thus, the graph in the first row and second column presents the response of approval ratings to a shock in SK2JP. When focusing on the graphs in the first column, all the net cooperation scores do not have responses to the shock in the approval ratings, which means the direction from the approval ratings to the net cooperation scores is not valid. On the other hand, a positive shock in the net cooperation scores leads to positive or negative response in the monthly presidential approval ratings. 
   
 ```{r VAR2, fig.width = 7, fig.height = 7, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot5}Impulse Response Functions (Quarterly)"}
 unemp_q_ts <- ts(doves_korq$unemp_k_q, doves_korq$qdate)
@@ -239,15 +239,13 @@ plot(IRF2, plot.type="single", main="", sub="")
 # Results
 
   In order to figure out proper lag lengths for the dependent variable, I conduct several models with various combination of lagged values of the dependent variables and compare the AIC and BIC values. Based on the AIC and BIC values, I include the first and fourth lag of the quarterly approval ratings and the first and twelfth lag of the monthly presidential approval ratings in the models. Although the fourth lag of the quarterly approval ratings and the twelfth lag of the monthly approval ratings are not statistically significant as shown in Table 1 and Table 2, models including the fourth lag and the twelfth lag of the dependent variable as well as the first lag have lower values in both AIC and BIC. Since the effects of the independent variables at time point t cannot be examined by employing the VAR models, contemporaneous values of the independent variables are also included in the model. In order to find a better model fit, I try different combinations of the contemporaneous and lagged values of the independent and control and, thus, add the first lag of the first differenced unemployment rate and the first lag of SK2NK to the models.
-  
-  As shown in Table 1, the contemporaneous value of SK2JP has a positive impact on the quarterly approval ratings. It is significant at p<.05 level in Model 2 and at p<.1 level in Model 1 and 3. The coefficient of SK2CH is negative in all three models but it is only significant at p<.1 level in Model 1. On the other hand, SK2NK and unemployment rate are not significant at time point t and t-1 as well. When comparing the AIC and BIC values of the models, Model 1 shows the best fit. Overall, the results show that the cooperative behavior toward Japan has a contemporaneous positive impact on the South Korean quarterly presidential approval ratings, and the cooperative behavior toward China has a contemporaneous negative impact on the approval ratings.  
 
 ```{r, results='asis', echo = FALSE, warning = FALSE, message = FALSE}
 Model1 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + kp_q_ts + unemp_q_d_ts +newgov_q_ts, data = ADLdataq)
 Model2 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + kp_q_ts + L(unemp_q_d_ts) +newgov_q_ts, data = ADLdataq)
 Model3 <- dynlm(app_q ~ L(app_q) +L(app_q,4) + kj_q_ts+ kc_q_ts + L(kp_q_ts) + L(unemp_q_d_ts) +newgov_q_ts, data = ADLdataq)
 
-stargazer(Model1, Model2, Model3, type = "latex", object.names = TRUE, model.numbers = FALSE, keep.stat=c("aic", "bic", "rsq", "n"),
+stargazer(Model1, Model2, Model3, type = "latex", object.names = TRUE, model.numbers = FALSE, no.space = TRUE, header = FALSE, 
           title = "The Effect of External Relations on the Quarterly Approval Ratings",
           covariate.labels = c("Approval(t-1)", "Approval(t-4)",
                                "SK2JP", "SK2CH", "SK2NK",
@@ -257,13 +255,16 @@ stargazer(Model1, Model2, Model3, type = "latex", object.names = TRUE, model.num
 
 ```
 
+  As shown in Table 1, the contemporaneous value of SK2JP has a positive impact on the quarterly approval ratings. It is significant at p<.05 level in Model 2 and at p<.1 level in Model 1 and 3. The coefficient of SK2CH is negative in all three models but it is only significant at p<.1 level in Model 1. On the other hand, SK2NK and unemployment rate are not significant at time point t and t-1 as well. When comparing the AIC and BIC values of the models, Model 1 shows the best fit. Overall, the results show that the cooperative behavior toward Japan has a contemporaneous positive impact on the South Korean quarterly presidential approval ratings, and the cooperative behavior toward China has a contemporaneous negative impact on the approval ratings.  
+
+  Table 2 shows the models for the monthly approval ratings. Similar to the models for the monthly presidential approval ratings, I include the first and twelfth lag of the dependent variable and new government variable across the models. Also, I attempt several models using various combinations of contemporaneous and lagged values of the independent variables to compare the AIC and BIC values. Although the coefficient of SK2JP is positive and that of SK2CH is negative, they are not significant in Model 4, 5, and 6. The results imply that the net cooperation scores of three directed dyads and the unemployment rate do not have any significant impacts on the monthly approval ratings but the presidential approval ratings at the previous month and new government have. 
 
 ```{r, results='asis', echo = FALSE, warning = FALSE, message = FALSE}
 Model4 <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + kp_m_ts + unemp_m_d_ts + newgov_ts, data = ADLdata)
 Model5 <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + kp_m_ts + L(unemp_m_d_ts) + newgov_ts, data = ADLdata)
 Model6 <- dynlm(app_m ~ L(app_m) + L(app_m, 12)+  kj_m_ts + kc_m_ts + L(kp_m_ts) + L(unemp_m_d_ts) + newgov_ts, data = ADLdata)
 
-stargazer(Model4, Model5, Model6, type = "latex", object.names = TRUE, model.numbers = FALSE, keep.stat=c("aic", "bic", "rsq", "n"),
+stargazer(Model4, Model5, Model6, type = "latex", object.names = TRUE, model.numbers = FALSE, no.space = TRUE, header = FALSE, 
           title = "The Effect of External Relations on the Monthlyly Approval Ratings",
           covariate.labels = c("Approval(t-1)", "Approval(t-12)",
                                "SK2JP", "SK2CH", "SK2NK",
@@ -272,4 +273,10 @@ stargazer(Model4, Model5, Model6, type = "latex", object.names = TRUE, model.num
           dep.var.labels   = "Approval Ratings (Monthly)")
 
 ```
+
+\pagebreak
 # Conclusion
+
+This paper attempts to examine the relationship between external relations and approval ratings focusing on the South Korean case. Since both the monthly and quarterly South Korean presidential approval ratings are available, I set models for each time span considering the probable endogeneity problem. The plotted IRFs show that cooperative behaviors toward neighboring rival states can affect the South Korean presidential approval ratings but not vice versa. Based on the responses of variables shown in the IRFs, I set a single equation for each time span, where the dependent variable is the presidential approval ratings and the independent variables are net cooperation scores of three directed dyads. The results show that South Korea’s cooperative behavior toward Japan has a positive impact on the quarterly approval ratings but it is not significant in models using monthly aggregated data. 
+
+  For further studies, more efforts are necessary both in data collection and model specification. First, the TERRIER event data have fewer observations in the early 1990s for the three dyads I focus on. This can be problematic because the fewer observations in the period can make the independent variable less varying. Second, it is necessary to check the data generating process for the monthly and quarterly South Korean presidential approval ratings. Since they are drawn from different research organizations, their different approaches can affect the approval ratings themselves. In this case, it is difficult to compare the results from the monthly and quarterly without considering their data generating process. Lastly, the VAR model has limitations in that it does not include contemporaneous values of variables and not specify the different lag lengths among variables. In this context, more efforts regarding the data collection and model specification can provide a better understanding of the relationship between external relations and domestic politics.
