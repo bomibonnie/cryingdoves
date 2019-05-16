@@ -5,7 +5,7 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: C:/Users/bomim/Documents/cryingdoves/paper/svm-latex-ms2.tex
+    template: svm-latex-ms2.tex
 title: "Does Cooperation with Rival States Matter?"
 thanks: "The paper's revision history and the materials needed to reproduce its analyses can be found [on Github here](http://github.com/bomibonnie/cryingdoves). Corresponding author: [bomi-lee-1@uiowa.edu](mailto:bomi-lee-1@uiowa.edu). Current version: `r format(Sys.time(), '%B %d, %Y')`."
 author:
@@ -86,8 +86,8 @@ Since I focus on the monthly and quarterly South Korean presidential approval ra
 
 
 ```{r plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot1}South Korean Approval Ratings"}
-doves_korm <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korm_nomiss.csv")
-doves_korq <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korq.csv")
+doves_korm <- read.csv(here::here("data/doves_korm_nomiss.csv"))
+doves_korq <- read.csv(here::here("data/doves_korq.csv"))
 
 doves_korm$mdate = as.yearmon(paste(doves_korm$year, " ", doves_korm$month), format = "%Y %m")
 app_m <- as.xts(doves_korm$app_nom, order.by=doves_korm$mdate)
