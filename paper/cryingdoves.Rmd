@@ -5,7 +5,7 @@ output:
     keep_tex: false
     fig_caption: true
     latex_engine: pdflatex
-    template: C:/Users/bomim/Documents/cryingdoves/paper/svm-latex-ms2.tex
+    template: svm-latex-ms2.tex
 title: "Does Cooperation with Rival States Matter?"
 thanks: "The paper's revision history and the materials needed to reproduce its analyses can be found [on Github here](http://github.com/bomibonnie/cryingdoves). Corresponding author: [bomi-lee-1@uiowa.edu](mailto:bomi-lee-1@uiowa.edu). Current version: `r format(Sys.time(), '%B %d, %Y')`."
 author:
@@ -86,8 +86,8 @@ Since I focus on the monthly and quarterly South Korean presidential approval ra
 
 
 ```{r plot, fig.width = 7, fig.height = 4, warning = FALSE, message = FALSE, echo = FALSE, fig.cap="\\label{fig:plot1}South Korean Approval Ratings"}
-doves_korm <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korm_nomiss.csv")
-doves_korq <- read.csv("C:/Users/bomim/Documents/cryingdoves/data/doves_korq.csv")
+doves_korm <- read.csv(here::here("data/doves_korm_nomiss.csv"))
+doves_korq <- read.csv(here::here("data/doves_korq.csv"))
 
 doves_korm$mdate = as.yearmon(paste(doves_korm$year, " ", doves_korm$month), format = "%Y %m")
 app_m <- as.xts(doves_korm$app_nom, order.by=doves_korm$mdate)
@@ -253,6 +253,44 @@ stargazer(Model1, Model2, Model3, type = "latex", object.names = TRUE, model.num
                                "Unemployment(t-1)", "New Government"),
           dep.var.labels   = "Approval Ratings (Quarterly)")
 
+```
+
+```{r m123_plot, echo=FALSE, fig.height = 3, fig.cap = "\\label{fig:m123_plot}The Effect of External Relations on Quarterly Approval Ratings"}
+m1_coef <- broom::tidy(Model1) %>%
+  mutate(model = "Model 1")
+m2_coef <- broom::tidy(Model2) %>% 
+  mutate(model = "Model 2")
+m3_coef <- broom::tidy(Model3) %>% 
+  mutate(model = "Model 3")
+m123_coef <- bind_rows(m1_coef, m2_coef, m3_coef) %>% 
+  filter(term != "(Intercept)") %>% 
+  mutate(order = case_when(term == "L(app_q)" ~ 1,
+    term == "L(app_q, 4)" ~ 2,
+    term == "kj_q_ts" ~ 3,
+    term == "kc_q_ts" ~ 4,
+    term == "kp_q_ts" ~ 5,
+    term == "unemp_q_d_ts" ~ 6,
+    term == "L(kp_q_ts)" ~ 7,
+    term == "L(unemp_q_d_ts)" ~ 8,
+    term == "newgov_q_ts" ~ 9)) %>% 
+  arrange(order)
+
+dwplot(m123_coef) %>% 
+  relabel_predictors("L(app_q)" = "Approval(t-1)",
+   "L(app_q, 4)" = "Approval(t-4)",
+   "kj_q_ts" = "SK2JP",
+   "kc_q_ts" = "SK2CH",
+   "kp_q_ts" = "SK2NK",
+   "unemp_q_d_ts" = "Unemployment",
+   "L(kp_q_ts)" = "SK2NK(t-1)",
+   "L(unemp_q_d_ts)" = "Unemployment(t-1)",
+   "newgov_q_ts" = "New Government") +
+  theme_bw() +
+  scale_color_discrete(name="Approval\nRatings\n(Monthly)") +
+  theme(plot.title = element_text(face="bold"),
+           legend.position = c(0.99, 0.99),
+           legend.justification = c(1, 1), 
+           legend.background = element_rect(colour="grey80"))
 ```
 
   As shown in Table 1, the contemporaneous value of SK2JP has a positive impact on the quarterly approval ratings. It is significant at p<.05 level in Model 2 and at p<.1 level in Model 1 and 3. The coefficient of SK2CH is negative in all three models but it is only significant at p<.1 level in Model 1. On the other hand, SK2NK and unemployment rate are not significant at time point t and t-1 as well. When comparing the AIC and BIC values of the models, Model 1 shows the best fit. Overall, the results show that the cooperative behavior toward Japan has a contemporaneous positive impact on the South Korean quarterly presidential approval ratings, and the cooperative behavior toward China has a contemporaneous negative impact on the approval ratings.  
